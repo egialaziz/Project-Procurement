@@ -59,7 +59,7 @@ export default function UploadPage() {
       <input type="file" accept=".xlsx, .xls" onChange={(e) => setFile(e.target.files?.[0] || null)} className="mb-4" />
       <button onClick={handleFileUpload} className="bg-green-600 text-white px-4 py-2 rounded">Upload</button>
       {message && <p className="mt-4">{message}</p>}
-=======
+
       <h1 className="text-3xl font-bold mb-6">Upload Excel</h1>
       <input type="file" onChange={handleFileChange} className="mb-4" />
       <button onClick={handleUpload} className="bg-blue-600 text-white px-4 py-2 rounded">
