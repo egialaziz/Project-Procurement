@@ -1,17 +1,23 @@
-import React from 'react'
+// components/Layout.tsx
 
-interface LayoutProps {
-  children: React.ReactNode
-}
+import React from 'react';
+import Head from 'next/head';
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+type LayoutProps = {
+  children: React.ReactNode;
+  title?: string;
+};
+
+const Layout = ({ children, title = 'Project Procurement' }: LayoutProps) => {
   return (
     <div>
-      <header>Header</header>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content="Project Procurement Application" />
+      </Head>
       <main>{children}</main>
-      <footer>Footer</footer>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
