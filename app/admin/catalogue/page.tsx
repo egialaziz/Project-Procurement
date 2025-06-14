@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
+import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import Layout from '@/components/Layout';
 
-export default function AdminCataloguePage() {
-  const [items, setItems] = useState<any[]>([]);
+export default function AdminCatalogue() {
+  const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await supabase.from('catalogue').select('*');
-      setItems(data || []);
+      const { data } = await supabase.from('procurement').select('*');
+      setData(data || []);
     };
     fetchData();
   }, []);
@@ -21,15 +21,17 @@ export default function AdminCataloguePage() {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="py-2">ID</th>
-            <th className="py-2">Name</th>
+            {data[0] && Object.keys(data[0]).map((key) => (
+              <th className="border px-4 py-2" key={key}>{key}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {items.map((item, i) => (
-            <tr key={i}>
-              <td className="py-2">{item.id}</td>
-              <td className="py-2">{item.name}</td>
+          {data.map((row, idx) => (
+            <tr key={idx}>
+              {Object.values(row).map((val, i) => (
+                <td className="border px-4 py-2" key={i}>{val as any}</td>
+              ))}
             </tr>
           ))}
         </tbody>
