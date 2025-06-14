@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+
     "start": "next start",
     "lint": "next lint"
   },
@@ -17,5 +18,20 @@
     "typescript": "^5.4.5",
     "@types/react": "^18.2.37",
     "@types/node": "^20.11.30"
+
+    "start": "next start"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.5",
+    "file-saver": "^2.0.5",
+    "next": "^15.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.8",
+    "typescript": "5.8.3"
+
   }
 }
