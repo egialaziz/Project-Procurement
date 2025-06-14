@@ -1,13 +1,20 @@
 'use client';
-
 import React from 'react';
+import Link from 'next/link';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container mx-auto p-4">
-      {children}
+    <div>
+      <nav className="bg-blue-600 text-white p-4">
+        <div className="flex gap-4">
+          <Link href="/">Home</Link>
+          <Link href="/admin/upload">Upload</Link>
+          <Link href="/admin/catalogue">Admin Catalogue</Link>
+          <Link href="/user/catalogue">User Catalogue</Link>
+          <Link href="/auth/login">Login</Link>
+        </div>
+      </nav>
+      <div className="p-4">{children}</div>
     </div>
   );
-};
-
-export default Layout;
+}
