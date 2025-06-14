@@ -2,14 +2,10 @@
 
 import React from 'react';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">{children}</div>
+    <div className="container mx-auto p-4">
+      {children}
     </div>
   );
 };
