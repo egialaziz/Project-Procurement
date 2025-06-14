@@ -7,44 +7,34 @@ import { supabase } from '@/lib/supabaseClient';
 
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
-  const [message, setMessage] = useState<string>('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      setFile(e.target.files[0]);
-    }
+    setFile(e.target.files?.[0] || null);
   };
 
   const handleUpload = async () => {
-    if (!file) {
-      setMessage('Please select a file.');
-      return;
-    }
+    if (!file) return;
 
     const data = await file.arrayBuffer();
     const workbook = XLSX.read(data);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet);
+    const json = XLSX.utils.sheet_to_json(worksheet);
 
-    for (const item of jsonData) {
-      await supabase.from('catalogue').insert({
-        name: item.name,
-        description: item.description,
-        price: item.price
-      });
+    for (const item of json) {
+      await supabase.from('catalogue').insert(item);
     }
 
-    setMessage('Upload successful!');
+    alert('Upload success!');
   };
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-4">Upload Catalogue</h1>
-      <input type="file" onChange={handleFileChange} className="mb-4" />
-      <button onClick={handleUpload} className="bg-blue-500 text-white px-4 py-2 rounded">
+      <h1 className="text-2xl font-bold mb-4">Upload Excel</h1>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload} className="mt-4 p-2 bg-blue-600 text-white rounded">
         Upload
       </button>
-      {message && <p className="mt-4">{message}</p>}
     </Layout>
   );
 }
+
