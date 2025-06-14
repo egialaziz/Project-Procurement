@@ -1,25 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import { supabase } from '@/lib/supabaseClient';
 
-interface CatalogueItem {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
-
-export default function AdminCatalogue() {
-  const [catalogue, setCatalogue] = useState<CatalogueItem[]>([]);
+export default function AdminCataloguePage() {
+  const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchCatalogue = async () => {
+    const fetchData = async () => {
       const { data } = await supabase.from('catalogue').select('*');
-      if (data) setCatalogue(data);
+      setItems(data || []);
     };
-    fetchCatalogue();
+    fetchData();
   }, []);
 
   return (
@@ -28,19 +21,15 @@ export default function AdminCatalogue() {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="border px-4 py-2">ID</th>
-            <th className="border px-4 py-2">Name</th>
-            <th className="border px-4 py-2">Description</th>
-            <th className="border px-4 py-2">Price</th>
+            <th className="py-2">ID</th>
+            <th className="py-2">Name</th>
           </tr>
         </thead>
         <tbody>
-          {catalogue.map((item) => (
-            <tr key={item.id}>
-              <td className="border px-4 py-2">{item.id}</td>
-              <td className="border px-4 py-2">{item.name}</td>
-              <td className="border px-4 py-2">{item.description}</td>
-              <td className="border px-4 py-2">{item.price}</td>
+          {items.map((item, i) => (
+            <tr key={i}>
+              <td className="py-2">{item.id}</td>
+              <td className="py-2">{item.name}</td>
             </tr>
           ))}
         </tbody>
