@@ -1,6 +1,8 @@
 const path = require('path');
 
 const nextConfig = {
+  reactStrictMode: true,  // best practice
+
   webpack: (config) => {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
@@ -8,6 +10,6 @@ const nextConfig = {
     };
     return config;
   }
-}
+};
 
 module.exports = nextConfig;
