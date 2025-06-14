@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -15,19 +17,9 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      console.log("Login response:", { data, error });
-
-      if (error) {
-        setError(error.message);
-      } else {
-        // gunakan hard redirect agar pasti
-        window.location.href = '/admin/catalogue';
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) setError(error.message);
+      else router.push('/admin/catalogue');
     } catch (err: any) {
       console.error("Unexpected error:", err);
       setError('Unexpected error occurred.');
