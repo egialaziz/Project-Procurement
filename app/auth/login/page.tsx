@@ -1,7 +1,7 @@
 'use client';
 
 
->>>>>>> 52a6a1d (Initial commit)
+
 import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useRouter } from 'next/navigation';
