@@ -10,7 +10,7 @@ export default function UserCatalogue() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await supabase.from('procurement').select('*');
+     const { data } = await supabase.from('procurement_catalogue').select('*');
       setData(data || []);
     };
     fetchData();
