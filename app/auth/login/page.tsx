@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  // tambahkan loading state
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ export default function LoginPage() {
         password,
       });
 
-      console.log("Supabase response:", data, error);
+      console.log("Login response:", { data, error }); // <-- Tambahkan disini
 
       if (error) {
         setError(error.message);
@@ -42,27 +42,9 @@ export default function LoginPage() {
       <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl mb-4 font-bold text-center">Admin Login</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
-        <input
-          type="email"
-          placeholder="Email"
-          className="mb-4 p-2 border w-full"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="mb-4 p-2 border w-full"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-        <button
-          type="submit"
-          className={`w-full py-2 rounded ${loading ? 'bg-gray-400' : 'bg-blue-600 text-white'}`}
-          disabled={loading}
-        >
+        <input type="email" placeholder="Email" className="mb-4 p-2 border w-full" onChange={e => setEmail(e.target.value)} required />
+        <input type="password" placeholder="Password" className="mb-4 p-2 border w-full" onChange={e => setPassword(e.target.value)} required />
+        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
