@@ -1,17 +1,71 @@
 'use client';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import * as XLSX from 'xlsx';
 
-export default function Home() {
+export default function UserCatalogue() {
+  const [data, setData] = useState<any[]>([]);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await supabase.from('procurement_catalogue').select('*');
+      setData(data || []);
+    };
+    fetchData();
+  }, []);
+
+  const filteredData = data.filter((row) => {
+    const rowValues = Object.values(row).join(' ').toLowerCase();
+    return rowValues.includes(search.toLowerCase());
+  });
+
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Data');
+    XLSX.writeFile(workbook, 'procurement.xlsx');
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 p-4">
-      <div className="bg-white rounded-lg shadow-lg p-10 max-w-md w-full text-center">
-        <h1 className="text-3xl font-extrabold mb-4 text-orange-600">Procurement Catalogue</h1>
-        <p className="mb-8 text-gray-600">Please navigate to Admin or User pages to continue.</p>
+    <div className="p-8 bg-orange-50 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-center text-orange-700">User Catalogue View</h1>
 
-        <div className="flex flex-col gap-4">
-          <Link href="/auth/login" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-md">Admin Login</Link>
-          <Link href="/user/catalogue" className="bg-white border-2 border-orange-500 text-orange-500 font-semibold py-3 px-6 rounded-lg transition duration-300 hover:bg-orange-100">User Catalogue View</Link>
-        </div>
+      <div className="flex justify-between items-center mb-6">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button
+          onClick={exportToExcel}
+          className="ml-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded shadow"
+        >
+          Export to Excel
+        </button>
+      </div>
+
+      <div className="overflow-x-auto shadow rounded bg-white">
+        <table className="min-w-full border-collapse border border-orange-400">
+          <thead className="bg-orange-200">
+            <tr>
+              {filteredData[0] && Object.keys(filteredData[0]).map((key) => (
+                <th key={key} className="border border-orange-400 px-4 py-2">{key}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((row, idx) => (
+              <tr key={idx} className="hover:bg-orange-100">
+                {Object.values(row).map((val, i) => (
+                  <td key={i} className="border border-orange-400 px-4 py-2">{val as any}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
