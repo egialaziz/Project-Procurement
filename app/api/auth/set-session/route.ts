@@ -1,19 +1,21 @@
-import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
-export async function POST(request: Request) {
-  const { access_token } = await request.json();
+export async function POST(req: Request) {
+  const { access_token, refresh_token } = await req.json();
 
-  if (!access_token) {
-    return NextResponse.json({ error: 'No token provided' }, { status: 400 });
-  }
+  const cookieStore = await cookies();  // ⬅ pakai await disini
 
-  cookies().set('sb-access-token', access_token, {
+  cookieStore.set('sb-access-token', access_token, {
     httpOnly: true,
     secure: true,
     path: '/',
-    sameSite: 'strict',
-    maxAge: 60 * 60 * 24 * 7, // 7 hari
+  });
+
+  cookieStore.set('sb-refresh-token', refresh_token, {
+    httpOnly: true,
+    secure: true,
+    path: '/',
   });
 
   return NextResponse.json({ success: true });
