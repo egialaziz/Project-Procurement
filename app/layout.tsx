@@ -1,14 +1,16 @@
-import './globals.css';
+import Layout from '@/components/Layout';
+import '@/globals.css';
 
 export const metadata = {
   title: 'Procurement Catalogue',
-  description: 'Upload & view procurement data',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Layout>{children}</Layout>
+      </body>
     </html>
   );
 }
