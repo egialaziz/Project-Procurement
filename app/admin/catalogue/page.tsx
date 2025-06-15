@@ -15,42 +15,30 @@ export default function AdminCatalogue() {
     fetchData();
   }, []);
 
-  const filteredData = data.filter((row) =>
-    Object.values(row).some(val =>
-      String(val).toLowerCase().includes(search.toLowerCase())
-    )
+  const filtered = data.filter(row =>
+    Object.values(row).some(val => val?.toString().toLowerCase().includes(search.toLowerCase()))
   );
 
   return (
-    <div className="p-8 bg-orange-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center text-orange-700">
-        Admin Catalogue Management
-      </h1>
+    <div>
+      <h1 className="text-3xl font-bold mb-6 text-orange-600 text-center">Admin Catalogue</h1>
+      <input type="text" placeholder="Search..." className="border p-2 mb-4 w-full"
+        value={search} onChange={(e) => setSearch(e.target.value)} />
 
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="p-2 border border-orange-400 rounded w-full max-w-md"
-        />
-      </div>
-
-      <div className="overflow-x-auto shadow rounded bg-white">
-        <table className="min-w-full border-collapse border border-orange-400">
+      <div className="overflow-x-auto bg-white shadow rounded">
+        <table className="min-w-full border-collapse border border-orange-300">
           <thead className="bg-orange-500 text-white">
             <tr>
-              {filteredData[0] && Object.keys(filteredData[0]).map((key) => (
-                <th key={key} className="border border-orange-400 px-4 py-2">{key}</th>
+              {data[0] && Object.keys(data[0]).map((key) => (
+                <th key={key} className="px-4 py-2 border">{key}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((row, idx) => (
+            {filtered.map((row, idx) => (
               <tr key={idx} className="hover:bg-orange-50">
                 {Object.values(row).map((val, i) => (
-                  <td key={i} className="border border-orange-400 px-4 py-2">{val as any}</td>
+                  <td key={i} className="border px-4 py-2">{val as any}</td>
                 ))}
               </tr>
             ))}
