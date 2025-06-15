@@ -20,4 +20,4 @@ Password: admin
 - Create catalogue table sesuai instruksi
 - Enable Storage bucket `images`
 - Tambahkan environment `.env.local`
-- Deploy ke Vercel
+- Deploy ke Vercel 
