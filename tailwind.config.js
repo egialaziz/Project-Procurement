@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+// Trigger build
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
