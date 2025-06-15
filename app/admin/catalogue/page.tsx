@@ -5,7 +5,6 @@ import { supabase } from '@/lib/supabaseClient';
 
 export default function AdminCatalogue() {
   const [data, setData] = useState<any[]>([]);
-  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,18 +14,11 @@ export default function AdminCatalogue() {
     fetchData();
   }, []);
 
-  const filtered = data.filter(row =>
-    Object.values(row).some(val => val?.toString().toLowerCase().includes(search.toLowerCase()))
-  );
-
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6 text-orange-600 text-center">Admin Catalogue</h1>
-      <input type="text" placeholder="Search..." className="border p-2 mb-4 w-full"
-        value={search} onChange={(e) => setSearch(e.target.value)} />
-
-      <div className="overflow-x-auto bg-white shadow rounded">
-        <table className="min-w-full border-collapse border border-orange-300">
+      <h1 className="text-2xl font-bold mb-4 text-orange-600">Admin Catalogue Management</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-orange-300 shadow-md rounded">
           <thead className="bg-orange-500 text-white">
             <tr>
               {data[0] && Object.keys(data[0]).map((key) => (
@@ -35,7 +27,7 @@ export default function AdminCatalogue() {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((row, idx) => (
+            {data.map((row, idx) => (
               <tr key={idx} className="hover:bg-orange-50">
                 {Object.values(row).map((val, i) => (
                   <td key={i} className="border px-4 py-2">{val as any}</td>
