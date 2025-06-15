@@ -16,25 +16,25 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (error) {
-      setError(error.message);
+      if (error) {
+        setError(error.message);
+      } else if (data?.session) {
+        router.push('/admin/catalogue');
+      } else {
+        setError('Login failed.');
+      }
+    } catch {
+      setError('Unexpected error occurred.');
+    } finally {
       setLoading(false);
-    } else {
-      // Simpan token ke server API untuk set cookie
-      await fetch('/api/auth/set-session', {
-        method: 'POST',
-        body: JSON.stringify({ access_token: data.session?.access_token }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      router.push('/admin/catalogue');
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen bg-orange-100">
       <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl mb-4 font-bold text-center text-orange-600">Admin Login</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
