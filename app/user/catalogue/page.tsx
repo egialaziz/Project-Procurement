@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import * as XLSX from 'xlsx';
@@ -35,23 +34,18 @@ export default function UserCatalogue() {
       </div>
       <div className="overflow-x-auto shadow rounded bg-white">
         <table className="min-w-full border-collapse border border-orange-400">
-          <thead className="bg-orange-200">
+          <thead>
             <tr>
-              {data[0] &&
-                Object.keys(data[0]).map((key) => (
-                  <th key={key} className="border border-orange-400 px-4 py-2 text-left">
-                    {key}
-                  </th>
-                ))}
+              {data[0] && Object.keys(data[0]).map((key) => (
+                <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">{key}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {data.map((row, idx) => (
-              <tr key={idx} className="hover:bg-orange-50">
+              <tr key={idx}>
                 {Object.values(row).map((val, i) => (
-                  <td key={i} className="border border-orange-400 px-4 py-2">
-                    {val as any}
-                  </td>
+                  <td key={i} className="border border-orange-400 px-4 py-2">{val as any}</td>
                 ))}
               </tr>
             ))}
