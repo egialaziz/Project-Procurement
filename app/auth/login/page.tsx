@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useRouter } from 'next/navigation';
+import Layout from '@/components/Layout';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,11 +18,10 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) setError(error.message);
       else router.push('/admin/catalogue');
-    } catch (err: any) {
-      console.error("Unexpected error:", err);
+    } catch {
       setError('Unexpected error occurred.');
     } finally {
       setLoading(false);
@@ -29,16 +29,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl mb-4 font-bold text-center">Admin Login</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <input type="email" placeholder="Email" className="mb-4 p-2 border w-full" onChange={e => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Password" className="mb-4 p-2 border w-full" onChange={e => setPassword(e.target.value)} required />
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
-    </div>
+    <Layout>
+      <div className="flex justify-center items-center h-[80vh]">
+        <form onSubmit={handleLogin} className="bg-white p-10 rounded shadow-md w-full max-w-md">
+          <h2 className="text-3xl font-bold mb-6 text-center">Admin Login</h2>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <input type="email" placeholder="Email" value={email}
+            className="mb-4 p-3 border w-full rounded" onChange={e => setEmail(e.target.value)} required />
+          <input type="password" placeholder="Password" value={password}
+            className="mb-4 p-3 border w-full rounded" onChange={e => setPassword(e.target.value)} required />
+          <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded font-semibold" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+      </div>
+    </Layout>
   );
 }
