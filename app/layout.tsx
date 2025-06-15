@@ -1,5 +1,5 @@
-import './globals.css';
 import Layout from '@/components/Layout';
+import './globals.css';
 
 export const metadata = {
   title: 'Procurement Catalogue',
