@@ -1,14 +1,17 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
 
-export async function middleware(req: NextRequest) {
-  const { data: { session } } = await supabase.auth.getSession();
-  const url = req.nextUrl.clone();
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  if (!session && url.pathname.startsWith('/admin')) {
-    url.pathname = '/auth/login';
-    return NextResponse.redirect(url);
+  // Proteksi hanya halaman /admin
+  if (pathname.startsWith('/admin')) {
+    const isLoggedIn = request.cookies.get('sb-access-token');
+    if (!isLoggedIn) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth/login';
+      return NextResponse.redirect(url);
+    }
   }
 
   return NextResponse.next();
