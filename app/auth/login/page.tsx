@@ -16,22 +16,31 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (error) setError(error.message);
-    else router.push('/admin/catalogue');
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    } else {
+      // Simpan token ke server API untuk set cookie
+      await fetch('/api/auth/set-session', {
+        method: 'POST',
+        body: JSON.stringify({ access_token: data.session?.access_token }),
+        headers: { 'Content-Type': 'application/json' },
+      });
 
-    setLoading(false);
+      router.push('/admin/catalogue');
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600">
-      <form onSubmit={handleLogin} className="bg-white p-10 rounded shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-orange-600 text-center">Admin Login</h2>
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow-md w-96">
+        <h2 className="text-2xl mb-4 font-bold text-center text-orange-600">Admin Login</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
-        <input type="email" placeholder="Email" className="mb-4 p-3 border w-full rounded" onChange={e => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Password" className="mb-4 p-3 border w-full rounded" onChange={e => setPassword(e.target.value)} required />
-        <button type="submit" className="w-full bg-orange-500 text-white py-3 rounded shadow-md" disabled={loading}>
+        <input type="email" placeholder="Email" className="mb-4 p-2 border w-full" onChange={e => setEmail(e.target.value)} required />
+        <input type="password" placeholder="Password" className="mb-4 p-2 border w-full" onChange={e => setPassword(e.target.value)} required />
+        <button type="submit" className="w-full bg-orange-600 text-white py-2 rounded" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
