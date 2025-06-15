@@ -3,5 +3,7 @@
 @tailwind utilities;
 
 body {
+  background-color: #fff7ed; /* orange soft background */
+  color: #333;
   font-family: 'Inter', sans-serif;
 }
