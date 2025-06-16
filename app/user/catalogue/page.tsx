@@ -65,9 +65,9 @@ export default function UserCatalogue() {
 {key === 'photo' && val ? (
   <a href={val as string} target="_blank" rel="noopener noreferrer">
     <img 
-      src={(val as string)} 
+      src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=150&height=150'}
       alt="Photo" 
-      className="w-[150px] h-[150px] object-cover rounded mx-auto"
+      className="rounded mx-auto"
     />
   </a>
 ) : (val as any)}
