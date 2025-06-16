@@ -62,13 +62,15 @@ export default function UserCatalogue() {
               <tr key={idx} className="hover:bg-orange-100">
                 {Object.entries(row).map(([key, val], i) => (
                   <td key={i} className="border border-orange-400 px-4 py-2 text-center">
-  {key === 'photo' && val ? (
+{key === 'photo' && val ? (
+  <a href={val as string} target="_blank" rel="noopener noreferrer">
     <img 
-      src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=150&height=150'} 
+      src={(val as string)} 
       alt="Photo" 
-      className="rounded mx-auto"
+      className="rounded mx-auto w-16 h-16 object-cover hover:scale-105 transition-transform duration-200"
     />
-  ) : (val as any)}
+  </a>
+) : (val as any)}
 </td>
                 ))}
               </tr>
