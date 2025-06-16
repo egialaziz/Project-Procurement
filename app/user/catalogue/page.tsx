@@ -60,11 +60,11 @@ export default function UserCatalogue() {
             {filteredData.map((row, idx) => (
               <tr key={idx} className="hover:bg-orange-100">
                 {Object.entries(row).map(([key, val], i) => (
-  <td key={i} className="border border-orange-400 px-4 py-2 text-center">
-    {key === 'photo' && val
-      ? <img src={val as string} alt="Photo" className="w-12 h-12 object-cover rounded" />
-      : (val as any)}
-  </td>
+ <td key={i} className="border border-orange-400 px-4 py-2 text-center">
+  {key === 'photo' && val
+    ? <img src={val as string} alt="Photo" className="w-[112px] h-[112px] object-cover rounded" />
+    : (val as any)}
+</td>
 ))}
               </tr>
             ))}
