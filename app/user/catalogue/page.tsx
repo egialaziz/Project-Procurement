@@ -62,7 +62,7 @@ export default function UserCatalogue() {
                 {Object.entries(row).map(([key, val], i) => (
   <td key={i} className="border border-orange-400 px-4 py-2">
     {key === 'photo' && val
-      ? <img src={val as string} alt="Photo" className="w-20 h-20 object-cover rounded" />
+      ? <img src={val as string} alt="Photo" className="w-5 h-5 object-cover rounded" />
       : (val as any)}
   </td>
 ))}
