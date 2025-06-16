@@ -5,12 +5,10 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
-    "w-[112px]",
-    "h-[112px]",
-    "w-28",
-    "h-28",
     "w-16",
     "h-16",
+    "object-cover",
+    "rounded",
   ],
   theme: {
     extend: {},
