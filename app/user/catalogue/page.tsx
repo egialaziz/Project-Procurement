@@ -67,7 +67,7 @@ export default function UserCatalogue() {
     <img 
       src={(val as string)} 
       alt="Photo" 
-      className="rounded mx-auto w-16 h-16 object-cover hover:scale-105 transition-transform duration-200"
+      className="rounded mx-auto w-36 h-36 object-cover hover:scale-105 transition-transform duration-200"
     />
   </a>
 ) : (val as any)}
