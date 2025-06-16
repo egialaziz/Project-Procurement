@@ -47,7 +47,7 @@ export default function UserCatalogue() {
         </button>
       </div>
 
-      <div className="overflow-x-auto shadow rounded bg-white">
+      <div className="overflow-x-auto shadow rounded bg-white max-w-full">
         <table className="min-w-full border-collapse border border-orange-400">
           <thead className="bg-orange-200">
             <tr>
