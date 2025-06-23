@@ -1,36 +1,99 @@
 /* app/globals.css */
-body {
+
+/* 1. Base Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  /* HAPUS background-color dari sini */
 }
 
-/* Tambahkan class khusus untuk halaman yang perlu background orange */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* 2. Utility Classes */
 .bg-orange-soft {
   background-color: #fff5e6;
 }
 
+.bg-overlay {
+  position: relative;
+}
+
+.bg-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* 3. Background Image Helpers */
+.bg-fixed-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -10; /* Pastikan di belakang semua konten */
+}
+
+.bg-cover {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* 4. Table Styles */
 table {
   border-collapse: collapse;
   width: 100%;
+  margin: 1rem 0;
 }
 
 th, td {
   border: 1px solid #ffa500;
-  padding: 8px;
+  padding: 0.75rem;
   text-align: left;
 }
 
-button {
+/* 5. Button Styles */
+button, .btn {
   background-color: #ffa500;
   color: white;
-  padding: 10px 15px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.375rem;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-button:hover {
+button:hover, .btn:hover {
   background-color: #ff8c00;
+  transform: translateY(-1px);
+}
+
+/* 6. Z-index Management */
+.z-below {
+  z-index: -1;
+}
+
+.z-base {
+  z-index: 0;
+}
+
+.z-above {
+  z-index: 10;
+}
+
+/* 7. Responsive Safeguard */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
 }
