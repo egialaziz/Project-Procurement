@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row bg-white">
-      
+    <main className="min-h-screen flex flex-row bg-white">
+    
       {/* Left Section (Text) */}
       <section className="w-full lg:w-1/2 flex flex-col justify-center px-10 py-20">
         <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">New Inventory</p>
