@@ -4,12 +4,9 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-  safelist: [
-    "w-16",
-    "h-16",
-    "object-cover",
-    "rounded",
-  ],
+ safelist: [
+  "max-w-[80px]", "max-h-[80px]", "object-contain", "w-auto", "h-auto", "mx-auto", "rounded",
+],
   theme: {
     extend: {},
   },
