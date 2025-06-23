@@ -7,7 +7,7 @@ export default function Home() {
       {/* ✅ Background fixed + blur + dark overlay */}
       <div className="fixed inset-0 -z-50">
         <img
-          src="/P_20250612_084221.jpg"
+         // src="/P_20250612_084221.jpg"//
           alt="Background"
           className="w-20 h-20 md:w-24 md:h-24 object-contain"
         />
