@@ -9,7 +9,7 @@ export default function Home() {
         <img
           src="/P_20250612_084221.jpg"
           alt="Background"
-          className="w-full h-full object-cover opacity-60"
+          className="w-20 h-20 md:w-24 md:h-24 object-contain"
         />
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       </div>
