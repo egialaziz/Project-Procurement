@@ -22,7 +22,7 @@ export default function Home() {
       {/* Image Section */}
       <div className="w-full lg:w-1/2">
         <img
-          src="/your-placeholder.jpg" // Ganti nanti dengan gambar kamu
+          src="/P_20250612_084221.jpg" // Ganti nanti dengan gambar kamu
           alt="Procurement Visual"
           className="w-full h-[500px] object-cover"
         />
