@@ -4,18 +4,19 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="relative min-h-screen">
+      
       {/* Background Layer with Fixed Positioning */}
       <div className="fixed inset-0 -z-50">
         <img
           src="/P_20250612_084221.jpg"
           alt="Background"
-          className="w-full h-full object-cover opacity-60" blur-sm
+          className="w-full h-full object-cover opacity-60"
         />
         {/* Dark overlay for better text contrast */}
-        <div className="absolute inset-0 bg-black/30" /> {/* Lighter overlay */}
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      {/* Content Layer - Positioned in normal flow */}
+      {/* Content Layer */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-12">
         <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl p-8 max-w-md w-full text-center border border-orange-100">
           <h1 className="text-4xl font-bold mb-6 text-orange-600">Procurement Catalogue</h1>
