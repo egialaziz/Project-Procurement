@@ -5,20 +5,25 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       
-      {/* ✅ Background from /public */}
-      <div className="absolute inset-0 -z-10">
+      {/* ✅ Background Image */}
+      <div className="absolute inset-0 -z-20">
         <img
           src="/P_20250612_084221.jpg"
           alt="Background"
-          className="w-full h-screen object-cover opacity-20"
+          className="w-full h-full object-cover"
         />
       </div>
 
+      {/* ✅ Overlay Dark & Blur */}
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm -z-10" />
+
       {/* ✅ Foreground content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-        <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-10 max-w-md w-full text-center">
+        <div className="bg-white bg-opacity-80 backdrop-blur-md rounded-lg shadow-lg p-10 max-w-md w-full text-center">
           <h1 className="text-3xl font-extrabold mb-4 text-orange-600">Procurement Catalogue</h1>
-          <p className="mb-8 text-gray-700">Please navigate to Admin or User pages to continue.</p>
+          <p className="mb-8 text-gray-700">
+            Please navigate to Admin or User pages to continue.
+          </p>
 
           <div className="flex flex-col gap-4">
             <Link
