@@ -9,7 +9,7 @@ export default function Home() {
         <img
           src="/P_20250612_084221.jpg"
           alt="Background"
-          className="w-full h-full object-cover opacity-60" blur-sm{/* Adjusted transparency */}
+          className="w-full h-full object-cover opacity-60" blur-sm
         />
         {/* Dark overlay for better text contrast */}
         <div className="absolute inset-0 bg-black/30" /> {/* Lighter overlay */}
