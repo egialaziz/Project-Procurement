@@ -4,18 +4,16 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-orange-50 p-4">
-      <div className="bg-white rounded-lg shadow-lg p-10 max-w-md w-full text-center relative overflow-hidden">
-        
-        {/* Background image behind title */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 opacity-80 z-0 pointer-events-none">
-          <img
-            src="https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/Pic/P_20250612_084221.jpg"
-            alt="Background"
-            className="w-[200px] h-auto mx-auto"
-          />
-        </div>
+      <div className="relative bg-white rounded-lg shadow-lg p-10 max-w-md w-full text-center overflow-hidden">
 
-        {/* Content above image */}
+        {/* Background Image */}
+        <img
+          src="https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/Pic/P_20250612_084221.jpg"
+          alt="Background"
+          className="absolute top-0 left-0 w-full h-full object-cover opacity-10 z-0"
+        />
+
+        {/* Foreground content */}
         <div className="relative z-10">
           <h1 className="text-3xl font-extrabold mb-4 text-orange-600">Procurement Catalogue</h1>
           <p className="mb-8 text-gray-600">Please navigate to Admin or User pages to continue.</p>
