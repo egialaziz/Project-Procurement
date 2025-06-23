@@ -5,13 +5,34 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
-    "w-16",
-    "h-16",
-    "object-cover",
-    "rounded",
+    // Ukuran gambar dinamis
+    "w-16", "h-16", "w-20", "h-20", "w-28", "h-28", "w-32", "h-32", "w-full", "h-full",
+    
+    // Utility layout
+    "object-cover", "object-contain", "rounded", "rounded-lg", "rounded-xl",
+    
+    // Z-index dan layering
+    "z-10", "-z-10", "z-20", "-z-20", "z-30", "-z-50", "z-50",
+    
+    // Background dan overlay
+    "bg-black/30", "bg-black/40", "bg-black/50", "bg-white/90", "bg-white/95", "bg-white/80",
+    
+    // Blur dan transparansi
+    "backdrop-blur-sm", "backdrop-blur-md", "opacity-60", "opacity-70", "opacity-80"
   ],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        '-50': '-50',
+      },
+      opacity: {
+        '60': '0.6',
+        '70': '0.7',
+        '80': '0.8',
+        '90': '0.9',
+        '95': '0.95',
+      },
+    },
   },
   plugins: [],
-}
+};
