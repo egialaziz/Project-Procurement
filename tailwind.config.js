@@ -6,7 +6,7 @@ module.exports = {
   ],
   safelist: [
     // Ukuran gambar dinamis
-    "w-16", "h-16", "w-20", "h-20", "w-28", "h-28", "w-32", "h-32", "w-full", "h-full",
+    "w-16", "h-16", "w-20", "h-20", "object-cover", "rounded", "mx-auto",
     
     // Utility layout
     "object-cover", "object-contain", "rounded", "rounded-lg", "rounded-xl",
