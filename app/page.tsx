@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-orange-50 p-4">
+    <div className="relative min-h-screen overflow-hidden flex items-center justify-center bg-orange-50">
 
-      {/* Full Page Background Image */}
+      {/* Background Image - Full Page */}
       <img
         src="https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/Pic/P_20250612_084221.jpg"
         alt="Background"
-        className="absolute inset-0 w-full h-full object-cover opacity-10 z-0"
+        className="absolute inset-0 w-full h-full object-cover opacity-50 z-0"
       />
 
       {/* Foreground Content */}
