@@ -84,11 +84,14 @@ export default function UserCatalogue() {
               <th className="border border-orange-400 px-4 py-2 bg-orange-200">
                 <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
               </th>
-              {filteredData[0] && Object.keys(filteredData[0]).map((key) => (
-                <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
-                  {key}
-                </th>
-              ))}
+              {filteredData[0] &&
+  Object.keys(filteredData[0])
+    .filter((key) => key !== 'id')
+    .map((key) => (
+      <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
+        {key}
+      </th>
+    ))}
             </tr>
           </thead>
           <tbody>
@@ -101,21 +104,23 @@ export default function UserCatalogue() {
                     onChange={() => toggleRow(idx)}
                   />
                 </td>
-                {Object.entries(row).map(([key, val], i) => (
-                  <td key={i} className="border border-orange-400 px-4 py-2 text-center">
-                    {key === 'photo' && val ? (
-                      <a href={val as string} target="_blank" rel="noopener noreferrer">
-                        <img
-                          src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=100&height=100'}
-                          alt="Photo"
-                          className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
-                        />
-                      </a>
-                    ) : (
-                      val as any
-                    )}
-                  </td>
-                ))}
+               {Object.entries(row)
+  .filter(([key]) => key !== 'id')
+  .map(([key, val], i) => (
+    <td key={i} className="border border-orange-400 px-4 py-2 text-center">
+      {key === 'photo' && val ? (
+        <a href={val as string} target="_blank" rel="noopener noreferrer">
+          <img
+            src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=100&height=100'}
+            alt="Photo"
+            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
+          />
+        </a>
+      ) : (
+        val as any
+      )}
+    </td>
+))}
               </tr>
             ))}
           </tbody>
