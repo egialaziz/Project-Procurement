@@ -5,16 +5,16 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden">
 
-      {/* ✅ Background Image Fullscreen */}
+      {/* ✅ Background from /public/ */}
       <div className="absolute inset-0 -z-10">
         <img
-          src="https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/Pic/P_20250612_084221.jpg"
+          src="/P_20250612_084221jpg"
           alt="Background"
           className="w-full h-full object-cover opacity-20"
         />
       </div>
 
-      {/* ✅ Foreground Content */}
+      {/* ✅ Content */}
       <div className="flex flex-col items-center justify-center min-h-screen px-4">
         <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-10 max-w-md w-full text-center">
           <h1 className="text-3xl font-extrabold mb-4 text-orange-600">Procurement Catalogue</h1>
