@@ -1,10 +1,14 @@
 /* app/globals.css */
-
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #fff5e6; /* background orange soft */
+  /* HAPUS background-color dari sini */
+}
+
+/* Tambahkan class khusus untuk halaman yang perlu background orange */
+.bg-orange-soft {
+  background-color: #fff5e6;
 }
 
 table {
