@@ -6,15 +6,14 @@ export default function Home() {
     <div className="relative min-h-screen">
       
       {/* Background Layer with Fixed Positioning */}
-      <div className="fixed inset-0 -z-50">
-        <img
-          src="/P_20250612_084221.jpg"
-          alt="Background"
-          className="w-full h-full object-cover opacity-60"
-        />
-        {/* Dark overlay for better text contrast */}
-        <div className="absolute inset-0 bg-black/30" />
-      </div>
+     <div className="fixed inset-0 -z-50 bg-orange-100">
+  <img
+    src="/P_20250612_084221.jpg"
+    alt="Background"
+    className="w-full h-full object-cover opacity-60"
+  />
+  <div className="absolute inset-0 bg-black/30" />
+</div>
 
       {/* Content Layer */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-12">
