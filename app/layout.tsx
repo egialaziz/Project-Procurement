@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <main>{children}</main>
-        <footer>©Egi Al-Aziz</footer>
+        <footer className="bg-gray-300 p-4 text-center">©Egi Al-Aziz</footer>
       </body>
     </html>
   );
