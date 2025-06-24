@@ -19,12 +19,14 @@ export default function Home() {
       </section>
 
       {/* Image Section (Kanan) */}
-      <section className="lg:w-1/2 h-[300px] lg:h-auto">
-        <img
-        //  src="/landing.jpg" // 🔁 Ganti sesuai nama file kamu di /public
+      <div class="content-wrapper">
+        <div class="image">
+          <img
+        src="/landing.jpg" 
           alt="Team"
           className="w-full h-full object-cover"
         />
+        </div>
       </section>
     </main>
   );
