@@ -14,7 +14,7 @@ export default function Home() {
           href="/user/catalogue"
           className="bg-black text-white py-3 px-6 rounded-full hover:bg-gray-800 transition"
         >
-          <button type="button"></button>Lihat Katalog
+          <button type="button">Lihat Katalog</button>
         </Link>
       </section>
 
