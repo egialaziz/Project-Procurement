@@ -24,7 +24,6 @@ export default function Home() {
           <img
         src="/landing.jpg" 
           alt="Team"
-          className="w-full h-full object-cover"
         />
         </div>
     </main>
