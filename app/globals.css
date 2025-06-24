@@ -30,3 +30,9 @@ button {
 button:hover {
   background-color: #ff8c00;
 }
+
+footer {
+  background: #ccc;
+  padding: 1rem;
+  text-align: center;
+}
