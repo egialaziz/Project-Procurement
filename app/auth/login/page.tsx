@@ -17,27 +17,24 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  setError(null);
 
-      console.log('LOGIN RESULT:', data);
-      console.log('LOGIN ERROR:', error);
-
-      if (error) {
-        setError(error.message);
-      } else if (data?.session) {
-        router.push('/admin/catalogue');
-      } else {
-        setError('Login failed.');
-      }
-    } catch {
-      setError('Unexpected error occurred.');
-    } finally {
-      setLoading(false);
+  try {
+    // Validasi manual (hardcoded)
+    if (email === 'admin@admin.com' && password === 'admin') {
+      router.push('/admin/catalogue'); // Redirect jika cocok
+    } else {
+      setError('Invalid email or password');
     }
-  };
+  } catch {
+    setError('Unexpected error occurred.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="flex items-center justify-center h-screen bg-orange-100">
