@@ -57,9 +57,21 @@ export default function UserCatalogue() {
 
   return (
     <div className="p-8 bg-orange-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center text-orange-700">User Catalogue View</h1>
+      {/* 🔗 Home Navigation */}
+      <div className="mb-6">
+        <a
+          href="/"
+          className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded shadow"
+        >
+          ⬅ Home
+        </a>
+      </div>
 
-      {/* Search & Export */}
+      <h1 className="text-3xl font-bold mb-6 text-center text-orange-700">
+        User Catalogue View
+      </h1>
+
+      {/* 🔍 Search & 📤 Export */}
       <div className="flex justify-between items-center mb-6">
         <input
           type="text"
@@ -76,7 +88,7 @@ export default function UserCatalogue() {
         </button>
       </div>
 
-      {/* Table */}
+      {/* 📋 Table */}
       <div className="overflow-x-auto shadow rounded bg-white">
         <table className="min-w-full border-collapse border border-orange-400">
           <thead>
@@ -85,13 +97,13 @@ export default function UserCatalogue() {
                 <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
               </th>
               {filteredData[0] &&
-  Object.keys(filteredData[0])
-    .filter((key) => key !== 'id')
-    .map((key) => (
-      <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
-        {key}
-      </th>
-    ))}
+                Object.keys(filteredData[0])
+                  .filter((key) => key !== 'id')
+                  .map((key) => (
+                    <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
+                      {key}
+                    </th>
+                  ))}
             </tr>
           </thead>
           <tbody>
@@ -104,23 +116,23 @@ export default function UserCatalogue() {
                     onChange={() => toggleRow(idx)}
                   />
                 </td>
-               {Object.entries(row)
-  .filter(([key]) => key !== 'id')
-  .map(([key, val], i) => (
-    <td key={i} className="border border-orange-400 px-4 py-2 text-center">
-      {key === 'photo' && val ? (
-        <a href={val as string} target="_blank" rel="noopener noreferrer">
-          <img
-            src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=100&height=100'}
-            alt="Photo"
-            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
-          />
-        </a>
-      ) : (
-        val as any
-      )}
-    </td>
-))}
+                {Object.entries(row)
+                  .filter(([key]) => key !== 'id')
+                  .map(([key, val], i) => (
+                    <td key={i} className="border border-orange-400 px-4 py-2 text-center">
+                      {key === 'photo' && val ? (
+                        <a href={val as string} target="_blank" rel="noopener noreferrer">
+                          <img
+                            src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=100&height=100'}
+                            alt="Photo"
+                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
+                          />
+                        </a>
+                      ) : (
+                        val as any
+                      )}
+                    </td>
+                  ))}
               </tr>
             ))}
           </tbody>
