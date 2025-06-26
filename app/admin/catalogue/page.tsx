@@ -10,21 +10,26 @@ export default function AdminCatalogue() {
   const [search, setSearch] = useState('');
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // Fetch data
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await supabase.from('procurement_catalogue').select('*');
       setData(data || []);
+      setLoading(false);
     };
     fetchData();
   }, []);
 
+  // Search filter
   const filteredData = data.filter((row) => {
     const rowValues = Object.values(row).join(' ').toLowerCase();
     return rowValues.includes(search.toLowerCase());
   });
 
+  // Select all
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedRows([]);
@@ -35,6 +40,7 @@ export default function AdminCatalogue() {
     setSelectAll(!selectAll);
   };
 
+  // Select one row
   const toggleRow = (idx: number) => {
     if (selectedRows.includes(idx)) {
       setSelectedRows(selectedRows.filter((i) => i !== idx));
@@ -43,6 +49,7 @@ export default function AdminCatalogue() {
     }
   };
 
+  // Export to Excel
   const exportToExcel = () => {
     const selectedData = selectedRows.map((i) => filteredData[i]);
     if (selectedData.length === 0) return alert('No rows selected!');
@@ -54,7 +61,7 @@ export default function AdminCatalogue() {
 
   return (
     <div className="p-8 bg-orange-100 min-h-screen">
-      {/* Header with Add Item Button */}
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-orange-700">Admin Catalogue Management</h1>
         <button
@@ -84,53 +91,57 @@ export default function AdminCatalogue() {
 
       {/* Table */}
       <div className="overflow-x-auto shadow rounded bg-white">
-        <table className="min-w-full border-collapse border border-orange-400">
-          <thead>
-            <tr>
-              <th className="border border-orange-400 px-4 py-2 bg-orange-200">
-                <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
-              </th>
-              {filteredData[0] &&
-                Object.keys(filteredData[0])
-                  .filter((key) => key !== 'id')
-                  .map((key) => (
-                    <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
-                      {key}
-                    </th>
-                  ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((row, idx) => (
-              <tr key={idx} className="hover:bg-orange-100">
-                <td className="border border-orange-400 px-4 py-2 text-center">
-                  <input
-                    type="checkbox"
-                    checked={selectedRows.includes(idx)}
-                    onChange={() => toggleRow(idx)}
-                  />
-                </td>
-                {Object.entries(row)
-                  .filter(([key]) => key !== 'id')
-                  .map(([key, val], i) => (
-                    <td key={i} className="border border-orange-400 px-4 py-2 text-center">
-                      {key === 'photo' && val ? (
-                        <a href={val as string} target="_blank" rel="noopener noreferrer">
-                          <img
-                            src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=100&height=100'}
-                            alt="Photo"
-                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
-                          />
-                        </a>
-                      ) : (
-                        val as any
-                      )}
-                    </td>
-                  ))}
+        {loading ? (
+          <p className="text-center py-6 text-orange-600 font-semibold">Loading data...</p>
+        ) : (
+          <table className="min-w-full border-collapse border border-orange-400">
+            <thead>
+              <tr>
+                <th className="border border-orange-400 px-4 py-2 bg-orange-200">
+                  <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+                </th>
+                {filteredData[0] &&
+                  Object.keys(filteredData[0])
+                    .filter((key) => key !== 'id')
+                    .map((key) => (
+                      <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
+                        {key}
+                      </th>
+                    ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredData.map((row, idx) => (
+                <tr key={idx} className="hover:bg-orange-100">
+                  <td className="border border-orange-400 px-4 py-2 text-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(idx)}
+                      onChange={() => toggleRow(idx)}
+                    />
+                  </td>
+                  {Object.entries(row)
+                    .filter(([key]) => key !== 'id')
+                    .map(([key, val], i) => (
+                      <td key={i} className="border border-orange-400 px-4 py-2 text-center">
+                        {key === 'photo' && val ? (
+                          <a href={val as string} target="_blank" rel="noopener noreferrer">
+                            <img
+                              src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=100&height=100'}
+                              alt="Photo"
+                              className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
+                            />
+                          </a>
+                        ) : (
+                          val as any
+                        )}
+                      </td>
+                    ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
