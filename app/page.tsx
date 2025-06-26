@@ -15,6 +15,9 @@ export default function Home() {
           <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium">
             Admin Login
           </Link>
+          <Link href="/admin/catalogue" className="text-gray-600 hover:text-orange-600 font-medium">
+            Admin Catalogue
+          </Link>
         </div>
       </nav>
 
@@ -40,7 +43,7 @@ export default function Home() {
         {/* Kanan */}
         <section className="lg:w-1/2 h-[300px] lg:h-auto">
           <img
-            //src="/landing.jpg" // Ganti dengan nama file gambar kamu
+           // src="/landing.jpg" // Ganti dengan nama file gambar kamu di public/
             alt="Landing"
             className="w-full h-full object-cover"
           />
