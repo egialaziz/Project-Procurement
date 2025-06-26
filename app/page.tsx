@@ -40,7 +40,7 @@ export default function Home() {
         {/* Kanan */}
         <section className="lg:w-1/2 h-[300px] lg:h-auto">
           <img
-            src="/landing.jpg" // Ganti dengan nama file gambar kamu
+            //src="/landing.jpg" // Ganti dengan nama file gambar kamu
             alt="Landing"
             className="w-full h-full object-cover"
           />
