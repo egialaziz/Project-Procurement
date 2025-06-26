@@ -16,7 +16,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      if (email === 'admin@admin.com' && password === 'admin') {
+      if (email === 'admin@gmail.com' && password === 'egiegiegi') {
         window.location.href = '/admin/catalogue';
       } else {
         setError('Invalid email or password');
