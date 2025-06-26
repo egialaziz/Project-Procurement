@@ -17,7 +17,7 @@ export default function LoginPage() {
 
     try {
       if (email === 'admin@admin.com' && password === 'admin') {
-        router.push('/admin/catalogue');
+        window.location.href = '/admin/catalogue';
       } else {
         setError('Invalid email or password');
       }
