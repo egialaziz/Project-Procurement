@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
@@ -17,24 +16,17 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
-  setError(null);
-
-  try {
-    // Validasi manual (hardcoded)
-    if (email === 'admin@admin.com' && password === 'admin') {
-      router.push('/admin/catalogue'); // Redirect jika cocok
-    } else {
-      setError('Invalid email or password');
+      if (email === 'admin@admin.com' && password === 'admin') {
+        router.push('/admin/catalogue');
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch {
+      setError('Unexpected error occurred.');
+    } finally {
+      setLoading(false);
     }
-  } catch {
-    setError('Unexpected error occurred.');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-orange-100">
@@ -45,14 +37,14 @@ export default function LoginPage() {
           type="email"
           placeholder="Email"
           className="mb-4 p-2 border w-full"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
           type="password"
           placeholder="Password"
           className="mb-4 p-2 border w-full"
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <button
@@ -65,4 +57,4 @@ export default function LoginPage() {
       </form>
     </div>
   );
-} // ✅ Kurung penutup ini sangat penting!
+}
