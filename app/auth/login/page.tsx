@@ -14,16 +14,21 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+try {
+  console.log('Trying login with:', email, password);
 
-    try {
-      if (email === 'admin@gmail.com' && password === 'egiegiegi') {
-        window.location.href = '/admin/catalogue';
-      } else {
-        setError('Invalid email or password');
-      }
-    } catch {
-      setError('Unexpected error occurred.');
-    } finally {
+  if (email === 'admin@admin.com' && password === 'admin') {
+    console.log('Login success, redirecting...');
+    window.location.href = '/admin/catalogue';
+  } else {
+    console.log('Invalid credentials');
+    setError('Invalid email or password');
+  }
+} catch (err) {
+  console.error('Login error:', err);
+  setError('Unexpected error occurred.');
+}
+ finally {
       setLoading(false);
     }
   };
