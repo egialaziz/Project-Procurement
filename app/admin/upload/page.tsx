@@ -2,49 +2,127 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import * as XLSX from 'xlsx';
 
 export default function UploadPage() {
+  const [newItem, setNewItem] = useState<any>({
+    no: '',
+    photo: '',
+    spesifikasi: '',
+    minimum_pemesanan: '',
+    harga_minimum: '',
+    po_terbit: '',
+    vendor: '',
+    jenis: '',
+  });
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleAddItem = async () => {
+    // Validasi wajib isi
+    if (!newItem.no || !newItem.spesifikasi || !newItem.harga_minimum) {
+      setMessage('⚠️ Kolom wajib tidak boleh kosong.');
+      return;
+    }
 
     setLoading(true);
     setMessage('');
 
-    try {
-      const data = await file.arrayBuffer();
-      const workbook = XLSX.read(data);
-      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-      const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet);
-
-      for (const item of jsonData) {
-        await supabase.from('procurement_catalogue').insert([item]);
-      }
-
-      setMessage('Upload success!');
-    } catch (err) {
-      console.error(err);
-      setMessage('Error during upload.');
-    } finally {
-      setLoading(false);
+    const { error } = await supabase.from('procurement_catalogue').insert([newItem]);
+    if (error) {
+      console.error(error);
+      setMessage('❌ Gagal menambahkan item.');
+    } else {
+      setMessage('✅ Item berhasil ditambahkan.');
+      setNewItem({
+        no: '',
+        photo: '',
+        spesifikasi: '',
+        minimum_pemesanan: '',
+        harga_minimum: '',
+        po_terbit: '',
+        vendor: '',
+        jenis: '',
+      });
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white p-8 rounded shadow">
-      <h1 className="text-2xl font-bold text-orange-600 mb-4 text-center">Upload Procurement Catalogue</h1>
-      <input
-        type="file"
-        accept=".xlsx, .xls, .csv"
-        onChange={handleFile}
-        className="block w-full mb-4"
-      />
-      {loading && <p className="text-blue-600 text-center">Uploading...</p>}
-      {message && <p className="text-center text-green-600">{message}</p>}
+    <div className="max-w-5xl mx-auto mt-10 bg-white p-8 rounded shadow">
+      <h1 className="text-2xl font-bold text-orange-600 mb-6 text-center">Tambah Item Baru</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <input
+          type="number"
+          placeholder="No"
+          value={newItem.no}
+          onChange={(e) => setNewItem({ ...newItem, no: Number(e.target.value) })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Spesifikasi"
+          value={newItem.spesifikasi}
+          onChange={(e) => setNewItem({ ...newItem, spesifikasi: e.target.value })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Minimum Pemesanan"
+          value={newItem.minimum_pemesanan}
+          onChange={(e) => setNewItem({ ...newItem, minimum_pemesanan: e.target.value })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Harga Minimum"
+          value={newItem.harga_minimum}
+          onChange={(e) => setNewItem({ ...newItem, harga_minimum: e.target.value })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="PO Terbit"
+          value={newItem.po_terbit}
+          onChange={(e) => setNewItem({ ...newItem, po_terbit: e.target.value })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Vendor"
+          value={newItem.vendor}
+          onChange={(e) => setNewItem({ ...newItem, vendor: e.target.value })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Jenis"
+          value={newItem.jenis}
+          onChange={(e) => setNewItem({ ...newItem, jenis: e.target.value })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="URL Foto"
+          value={newItem.photo}
+          onChange={(e) => setNewItem({ ...newItem, photo: e.target.value })}
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
+      </div>
+
+      <button
+        onClick={handleAddItem}
+        disabled={loading}
+        className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded shadow"
+      >
+        {loading ? 'Menyimpan...' : 'Simpan'}
+      </button>
+
+      {message && (
+        <p className="mt-4 text-center text-sm font-medium text-orange-700">{message}</p>
+      )}
     </div>
   );
 }
