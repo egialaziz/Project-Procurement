@@ -25,14 +25,16 @@ export default function AdminCatalogue() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await supabase.from('procurement_catalogue').select('*');
-      setData(data || []);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
+ useEffect(() => {
+  const fetchData = async () => {
+    const { data } = await supabase
+      .from('procurement_catalogue')
+      .select('*')
+      .order('no', { ascending: true });
+    setData(data || []);
+  };
+  fetchData();
+}, []);
 
   const filteredData = data.filter((row) =>
     Object.values(row).join(' ').toLowerCase().includes(search.toLowerCase())
