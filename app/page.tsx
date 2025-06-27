@@ -6,17 +6,17 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
 
       {/* ✅ Navigation Bar */}
-      <nav className="flex justify-between items-center px-6 py-4 bg-white shadow-md">
-        <div className="text-lg font-semibold text-orange-600">Procurement</div>
-        <div className="space-x-4">
-          <Link href="/" className="text-gray-600 hover:text-orange-600 font-medium">
-            Home
-          </Link>
-          <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium">
-            Admin Login
-          </Link>
-        </div>
-      </nav>
+     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+  <div className="text-lg font-semibold text-orange-600">Procurement</div>
+  <div className="flex gap-4 ml-auto">
+    <Link href="/" className="text-gray-600 hover:text-orange-600 font-medium">
+      Home
+    </Link>
+    <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium">
+      Admin Login
+    </Link>
+  </div>
+</nav>
 
       {/* ✅ Main Content */}
       <main className="flex-1 flex flex-col lg:flex-row">
