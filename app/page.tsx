@@ -18,8 +18,8 @@ export default function Home() {
               <Link href="/" className="text-gray-600 hover:text-orange-600 font-medium">
                 Home
               </Link>
-              <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium">
-                Admin Login
+              <Link href="/admin/catalogue" className="text-gray-600 hover:text-orange-600 font-medium">
+                Admin Catalogue
               </Link>
             </div>
           </div>
