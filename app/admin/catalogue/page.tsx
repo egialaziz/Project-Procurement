@@ -86,17 +86,30 @@ export default function AdminCatalogue() {
   };
 
   return (
-    <div className="p-8 bg-orange-100 min-h-screen">
-      {/* ✅ Header with Home Button */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-orange-700">Admin Catalogue Management</h1>
-        <button
-          onClick={() => router.push('/')}
-          className="bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 rounded shadow"
-        >
-          Home
-        </button>
-      </div>
+    <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+  <h1 className="text-3xl font-bold text-orange-700">Admin Catalogue Management</h1>
+  <div className="flex flex-wrap gap-2">
+    <button
+      onClick={() => router.push('/')}
+      className="bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 rounded shadow"
+    >
+      Home
+    </button>
+    <button
+      onClick={() => router.push('/admin/upload')}
+      className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded shadow"
+    >
+      + Tambah Manual
+    </button>
+    <button
+      onClick={() => router.push('/admin/upload-excel')}
+      className="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded shadow"
+    >
+      Upload Excel
+    </button>
+  </div>
+</div>
+
 
       {/* Form Tambah Item */}
       <div className="bg-white p-4 mb-6 rounded shadow space-y-4">
