@@ -31,6 +31,10 @@ button:hover {
   background-color: #ff8c00;
 }
 
+button + button {
+  margin-left: 0.5rem; /* atau sesuaikan seperti 1rem untuk jarak lebih besar */
+}
+
 footer {
   background: #ccc;
   padding: 1rem;
