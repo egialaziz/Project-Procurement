@@ -11,16 +11,16 @@ export default function UserCatalogue() {
   const [selectAll, setSelectAll] = useState(false);
 
   // Fetch data once on mount
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await supabase
-  .from('procurement_catalogue')
-  .select('*')
-  .order('no', { ascending: true });
-      setData(data || []);
-    };
-    fetchData();
-  }, []);
+ useEffect(() => {
+  const fetchData = async () => {
+    const { data } = await supabase
+      .from('procurement_catalogue')
+      .select('*')
+      .order('no', { ascending: true });
+    setData(data || []);
+  };
+  fetchData();
+}, []);
 
   // Filtered by search
   const filteredData = data.filter((row) => {
