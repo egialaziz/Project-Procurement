@@ -11,11 +11,16 @@ export default function AdminCatalogue() {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [loading, setLoading] = useState(true);
+
   const [newItem, setNewItem] = useState<any>({
-    name: '',
-    description: '',
-    price: '',
-    photo: ''
+    no: '',
+    photo: '',
+    spesifikasi: '',
+    minimum_pemesanan: '',
+    harga_minimum: '',
+    po_terbit: '',
+    vendor: '',
+    jenis: '',
   });
 
   const router = useRouter();
@@ -29,10 +34,9 @@ export default function AdminCatalogue() {
     fetchData();
   }, []);
 
-  const filteredData = data.filter((row) => {
-    const rowValues = Object.values(row).join(' ').toLowerCase();
-    return rowValues.includes(search.toLowerCase());
-  });
+  const filteredData = data.filter((row) =>
+    Object.values(row).join(' ').toLowerCase().includes(search.toLowerCase())
+  );
 
   const handleSelectAll = () => {
     setSelectedRows(selectAll ? [] : filteredData.map((_, idx) => idx));
@@ -54,21 +58,28 @@ export default function AdminCatalogue() {
     XLSX.writeFile(workbook, 'admin_selected_procurement.xlsx');
   };
 
-  // ✅ Add item to Supabase
   const handleAddItem = async () => {
-    if (!newItem.name || !newItem.description || !newItem.price) {
-      alert('Mohon lengkapi semua field!');
+    if (!newItem.no || !newItem.spesifikasi || !newItem.harga_minimum) {
+      alert('Field wajib tidak boleh kosong.');
       return;
     }
 
     const { error } = await supabase.from('procurement_catalogue').insert([newItem]);
-
     if (error) {
-      alert('Gagal menambahkan item!');
+      alert('Gagal menambahkan item.');
       console.error(error);
     } else {
-      alert('Item berhasil ditambahkan!');
-      setNewItem({ name: '', description: '', price: '', photo: '' });
+      alert('Item berhasil ditambahkan.');
+      setNewItem({
+        no: '',
+        photo: '',
+        spesifikasi: '',
+        minimum_pemesanan: '',
+        harga_minimum: '',
+        po_terbit: '',
+        vendor: '',
+        jenis: '',
+      });
       const { data } = await supabase.from('procurement_catalogue').select('*');
       setData(data || []);
     }
@@ -80,34 +91,62 @@ export default function AdminCatalogue() {
         <h1 className="text-3xl font-bold text-orange-700">Admin Catalogue Management</h1>
       </div>
 
-      {/* ✅ Form Tambah Item */}
+      {/* Form Tambah Item */}
       <div className="bg-white p-4 mb-6 rounded shadow space-y-4">
         <h2 className="text-xl font-semibold text-orange-600">Tambah Item Baru</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input
-            type="text"
-            placeholder="Nama"
-            value={newItem.name}
-            onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="Deskripsi"
-            value={newItem.description}
-            onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
             type="number"
-            placeholder="Harga"
-            value={newItem.price}
-            onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
+            placeholder="No"
+            value={newItem.no}
+            onChange={(e) => setNewItem({ ...newItem, no: Number(e.target.value) })}
             className="border border-orange-400 px-3 py-2 rounded"
           />
           <input
             type="text"
-            placeholder="URL Foto (Opsional)"
+            placeholder="Spesifikasi"
+            value={newItem.spesifikasi}
+            onChange={(e) => setNewItem({ ...newItem, spesifikasi: e.target.value })}
+            className="border border-orange-400 px-3 py-2 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Minimum Pemesanan"
+            value={newItem.minimum_pemesanan}
+            onChange={(e) => setNewItem({ ...newItem, minimum_pemesanan: e.target.value })}
+            className="border border-orange-400 px-3 py-2 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Harga Minimum"
+            value={newItem.harga_minimum}
+            onChange={(e) => setNewItem({ ...newItem, harga_minimum: e.target.value })}
+            className="border border-orange-400 px-3 py-2 rounded"
+          />
+          <input
+            type="text"
+            placeholder="PO Terbit"
+            value={newItem.po_terbit}
+            onChange={(e) => setNewItem({ ...newItem, po_terbit: e.target.value })}
+            className="border border-orange-400 px-3 py-2 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Vendor"
+            value={newItem.vendor}
+            onChange={(e) => setNewItem({ ...newItem, vendor: e.target.value })}
+            className="border border-orange-400 px-3 py-2 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Jenis"
+            value={newItem.jenis}
+            onChange={(e) => setNewItem({ ...newItem, jenis: e.target.value })}
+            className="border border-orange-400 px-3 py-2 rounded"
+          />
+          <input
+            type="text"
+            placeholder="URL Foto"
             value={newItem.photo}
             onChange={(e) => setNewItem({ ...newItem, photo: e.target.value })}
             className="border border-orange-400 px-3 py-2 rounded"
@@ -121,12 +160,12 @@ export default function AdminCatalogue() {
         </button>
       </div>
 
-      {/* ✅ Search & Export */}
+      {/* Search + Export */}
       <div className="flex justify-between items-center mb-6">
         <input
           type="text"
           placeholder="Search..."
-          className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+          className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -138,7 +177,7 @@ export default function AdminCatalogue() {
         </button>
       </div>
 
-      {/* ✅ Tabel */}
+      {/* Tabel */}
       <div className="overflow-x-auto shadow rounded bg-white">
         {loading ? (
           <p className="text-center py-6 text-orange-600 font-semibold">Loading data...</p>
@@ -151,7 +190,7 @@ export default function AdminCatalogue() {
                 </th>
                 {filteredData[0] &&
                   Object.keys(filteredData[0])
-                    .filter((key) => key !== 'id')
+                    .filter((key) => key !== 'id' && key !== 'created_at')
                     .map((key) => (
                       <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
                         {key}
@@ -170,7 +209,7 @@ export default function AdminCatalogue() {
                     />
                   </td>
                   {Object.entries(row)
-                    .filter(([key]) => key !== 'id')
+                    .filter(([key]) => key !== 'id' && key !== 'created_at')
                     .map(([key, val], i) => (
                       <td key={i} className="border border-orange-400 px-4 py-2 text-center">
                         {key === 'photo' && val ? (
