@@ -87,92 +87,39 @@ export default function AdminCatalogue() {
 
   return (
     <div className="p-8 bg-orange-100 min-h-screen">
+      {/* ✅ Header with Home Button */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-orange-700">Admin Catalogue Management</h1>
+        <button
+          onClick={() => router.push('/')}
+          className="bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 rounded shadow"
+        >
+          Home
+        </button>
       </div>
 
       {/* Form Tambah Item */}
       <div className="bg-white p-4 mb-6 rounded shadow space-y-4">
         <h2 className="text-xl font-semibold text-orange-600">Tambah Item Baru</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <input
-            type="number"
-            placeholder="No"
-            value={newItem.no}
-            onChange={(e) => setNewItem({ ...newItem, no: Number(e.target.value) })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="Spesifikasi"
-            value={newItem.spesifikasi}
-            onChange={(e) => setNewItem({ ...newItem, spesifikasi: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="Minimum Pemesanan"
-            value={newItem.minimum_pemesanan}
-            onChange={(e) => setNewItem({ ...newItem, minimum_pemesanan: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="Harga Minimum"
-            value={newItem.harga_minimum}
-            onChange={(e) => setNewItem({ ...newItem, harga_minimum: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="PO Terbit"
-            value={newItem.po_terbit}
-            onChange={(e) => setNewItem({ ...newItem, po_terbit: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="Vendor"
-            value={newItem.vendor}
-            onChange={(e) => setNewItem({ ...newItem, vendor: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="Jenis"
-            value={newItem.jenis}
-            onChange={(e) => setNewItem({ ...newItem, jenis: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="URL Foto"
-            value={newItem.photo}
-            onChange={(e) => setNewItem({ ...newItem, photo: e.target.value })}
-            className="border border-orange-400 px-3 py-2 rounded"
-          />
+          <input type="number" placeholder="No" value={newItem.no} onChange={(e) => setNewItem({ ...newItem, no: Number(e.target.value) })} className="border border-orange-400 px-3 py-2 rounded" />
+          <input type="text" placeholder="Spesifikasi" value={newItem.spesifikasi} onChange={(e) => setNewItem({ ...newItem, spesifikasi: e.target.value })} className="border border-orange-400 px-3 py-2 rounded" />
+          <input type="text" placeholder="Minimum Pemesanan" value={newItem.minimum_pemesanan} onChange={(e) => setNewItem({ ...newItem, minimum_pemesanan: e.target.value })} className="border border-orange-400 px-3 py-2 rounded" />
+          <input type="text" placeholder="Harga Minimum" value={newItem.harga_minimum} onChange={(e) => setNewItem({ ...newItem, harga_minimum: e.target.value })} className="border border-orange-400 px-3 py-2 rounded" />
+          <input type="text" placeholder="PO Terbit" value={newItem.po_terbit} onChange={(e) => setNewItem({ ...newItem, po_terbit: e.target.value })} className="border border-orange-400 px-3 py-2 rounded" />
+          <input type="text" placeholder="Vendor" value={newItem.vendor} onChange={(e) => setNewItem({ ...newItem, vendor: e.target.value })} className="border border-orange-400 px-3 py-2 rounded" />
+          <input type="text" placeholder="Jenis" value={newItem.jenis} onChange={(e) => setNewItem({ ...newItem, jenis: e.target.value })} className="border border-orange-400 px-3 py-2 rounded" />
+          <input type="text" placeholder="URL Foto" value={newItem.photo} onChange={(e) => setNewItem({ ...newItem, photo: e.target.value })} className="border border-orange-400 px-3 py-2 rounded" />
         </div>
-        <button
-          onClick={handleAddItem}
-          className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded shadow"
-        >
+        <button onClick={handleAddItem} className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded shadow">
           Simpan
         </button>
       </div>
 
       {/* Search + Export */}
       <div className="flex justify-between items-center mb-6">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button
-          onClick={exportToExcel}
-          className="ml-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded shadow"
-        >
+        <input type="text" placeholder="Search..." className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm" value={search} onChange={(e) => setSearch(e.target.value)} />
+        <button onClick={exportToExcel} className="ml-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded shadow">
           Export Selected
         </button>
       </div>
@@ -192,9 +139,7 @@ export default function AdminCatalogue() {
                   Object.keys(filteredData[0])
                     .filter((key) => key !== 'id' && key !== 'created_at')
                     .map((key) => (
-                      <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
-                        {key}
-                      </th>
+                      <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">{key}</th>
                     ))}
               </tr>
             </thead>
@@ -202,11 +147,7 @@ export default function AdminCatalogue() {
               {filteredData.map((row, idx) => (
                 <tr key={idx} className="hover:bg-orange-100">
                   <td className="border border-orange-400 px-4 py-2 text-center">
-                    <input
-                      type="checkbox"
-                      checked={selectedRows.includes(idx)}
-                      onChange={() => toggleRow(idx)}
-                    />
+                    <input type="checkbox" checked={selectedRows.includes(idx)} onChange={() => toggleRow(idx)} />
                   </td>
                   {Object.entries(row)
                     .filter(([key]) => key !== 'id' && key !== 'created_at')
