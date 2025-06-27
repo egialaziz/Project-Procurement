@@ -15,9 +15,6 @@ export default function Home() {
           <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium">
             Admin Login
           </Link>
-          <Link href="/admin/catalogue" className="text-gray-600 hover:text-orange-600 font-medium">
-            Admin Catalogue
-          </Link>
         </div>
       </nav>
 
