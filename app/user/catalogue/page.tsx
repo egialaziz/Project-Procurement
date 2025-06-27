@@ -13,7 +13,10 @@ export default function UserCatalogue() {
   // Fetch data once on mount
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await supabase.from('procurement_catalogue').select('*');
+      const { data } = await supabase
+  .from('procurement_catalogue')
+  .select('*')
+  .order('no', { ascending: true });
       setData(data || []);
     };
     fetchData();
