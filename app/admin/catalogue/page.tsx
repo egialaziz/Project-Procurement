@@ -31,7 +31,9 @@ export default function AdminCatalogue() {
       .from('procurement_catalogue')
       .select('*')
       .order('no', { ascending: true });
+
     setData(data || []);
+    setLoading(false); // tambahkan ini!
   };
   fetchData();
 }, []);
