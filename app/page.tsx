@@ -41,7 +41,7 @@ export default function Home() {
         <section className="lg:w-1/2 h-[300px] lg:h-auto">
           <img
            // src="/landing.jpg" // Ganti dengan nama file gambar kamu di public/
-            alt="Landing"
+            alt="ini harusnya foto tampan aku, tapi style .css belum mengizinkan"
             className="w-full h-full object-cover"
           />
         </section>
