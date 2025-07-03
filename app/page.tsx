@@ -30,9 +30,8 @@ export default function Home() {
         {/* Kanan */}
         <section class="hero">
           <img
-            src="/landing.jpg" // Ganti dengan nama file gambar kamu di public/
-            alt="ini harusnya foto tampan aku, tapi style .css belum mengizinkan"
-            className="w-full h-full object-cover">
+            src="/landing.jpg" 
+            alt="ini harusnya foto tampan aku, tapi style .css belum mengizinkan">
             <div class="hero-text">
               <h2> Semua contoh dari barang permintaan model sendiri telah kami rangkum dalam katalog di situs ini.</h2>
                  <Link href="/user/catalogue">
