@@ -33,7 +33,7 @@ export default function Home() {
             src="/landing.jpg" 
             alt="ini harusnya foto tampan aku, tapi style .css belum mengizinkan">
             <div class="hero-text">
-              <h2> Semua contoh dari barang permintaan model sendiri telah kami rangkum dalam katalog di situs ini.</h2>
+              <h1> Semua contoh dari barang permintaan model sendiri telah kami rangkum dalam katalog di situs ini.</h1>
                  <Link href="/user/catalogue">
             <button
               type="button"
