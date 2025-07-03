@@ -24,10 +24,18 @@ export default function Home() {
         <section className="flex flex-col justify-center items-start p-10 lg:w-1/2 bg-[#fff5e6]">
           <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">Procurement Departement</p>
           <h1 className="text-4xl font-bold text-orange-600 mb-4">e-Procurement Catalogue</h1>
-          <p className="text-gray-700 mb-8">
-            Semua contoh dari barang permintaan model sendiri telah kami rangkum dalam katalog di situs ini.
-          </p>
-          <Link href="/user/catalogue">
+
+        </section>
+
+        {/* Kanan */}
+        <section class="hero">
+          <img
+            src="/landing.jpg" // Ganti dengan nama file gambar kamu di public/
+            alt="ini harusnya foto tampan aku, tapi style .css belum mengizinkan"
+            className="w-full h-full object-cover">
+            <div class="hero-text">
+              <h2> Semua contoh dari barang permintaan model sendiri telah kami rangkum dalam katalog di situs ini.</h2>
+                 <Link href="/user/catalogue">
             <button
               type="button"
               className="bg-black text-white py-3 px-6 rounded-full hover:bg-gray-800 transition"
@@ -35,16 +43,8 @@ export default function Home() {
               Lihat Katalog
             </button>
           </Link>
-        </section>
-
-        {/* Kanan */}
-        <section className="lg:w-1/2 h-[300px] lg:h-auto">
-          <img
-           // src="/landing.jpg" // Ganti dengan nama file gambar kamu di public/
-            alt="ini harusnya foto tampan aku, tapi style .css belum mengizinkan"
-            className="w-full h-full object-cover"
-          />
-        </section>
+              </div>
+            </section>
       </main>
     </div>
   );
