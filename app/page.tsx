@@ -4,29 +4,40 @@ import { FaArrowRight } from 'react-icons/fa';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-orange-50 to-white">
-      {/* ✅ Navigation Bar */}
-      <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md sticky top-0 z-10">
-        <div className="text-lg font-extrabold text-orange-600 tracking-wide drop-shadow-sm">Procurement</div>
-        <div className="flex gap-4 ml-auto">
-          <Link href="/" className="text-gray-600 hover:text-orange-600 font-medium transition-colors">
-            Home
-          </Link>
-          <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium transition-colors">
-            Admin Login
-          </Link>
-        </div>
-      </nav>
+    <div className="relative min-h-screen bg-orange-50 overflow-hidden">
+      {/* ✅ Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/landing.jpg"
+          alt="Background Hero"
+          className="w-full h-full object-cover opacity-30"
+        />
+      </div>
 
-      {/* ✅ Main Content */}
-      <main className="flex-1 flex flex-col lg:flex-row animate-fade-in">
-        {/* Kiri */}
-        <section className="flex flex-col justify-center items-start p-10 lg:w-1/2 bg-[#fff5e6]">
-          <p className="text-sm text-gray-500 mb-2 uppercase tracking-widest">Procurement Department</p>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-4 drop-shadow-lg animate-slide-down">
+      {/* ✅ Overlay Content */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Navbar */}
+        <nav className="flex items-center justify-between px-6 py-4 bg-white/80 shadow-md backdrop-blur-md">
+          <div className="text-lg font-extrabold text-orange-600 tracking-wide">Procurement</div>
+          <div className="flex gap-4 ml-auto">
+            <Link href="/" className="text-gray-600 hover:text-orange-600 font-medium transition-colors">
+              Home
+            </Link>
+            <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium transition-colors">
+              Admin Login
+            </Link>
+          </div>
+        </nav>
+
+        {/* Main Content */}
+        <main className="flex-1 flex flex-col items-start justify-center px-10 py-16 max-w-3xl mx-auto text-white text-left">
+          <p className="text-sm text-orange-100 mb-2 uppercase tracking-widest">
+            Procurement Department
+          </p>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg animate-slide-down">
             e-Procurement Catalogue
           </h1>
-          <p className="text-gray-700 mb-8 max-w-md animate-fade-in">
+          <p className="text-white/90 mb-8 max-w-md animate-fade-in drop-shadow">
             Temukan berbagai contoh barang permintaan yang telah kami rangkum dalam katalog digital ini.
             Mudahkan proses pengadaan dengan referensi yang lengkap dan up-to-date!
           </p>
@@ -38,22 +49,13 @@ export default function Home() {
               Lihat Katalog <FaArrowRight className="ml-1" />
             </button>
           </Link>
-        </section>
+        </main>
 
-        {/* Kanan */}
-        <section className="lg:w-1/2 h-[300px] lg:h-auto flex items-center justify-center bg-white animate-fade-in">
-          <img
-            src="/landing.jpg"
-            alt="Hero procurement illustration"
-            className="w-full h-full object-cover rounded-xl shadow-xl border-2 border-orange-100 animate-zoom-in"
-          />
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="w-full py-4 bg-white text-center text-gray-400 text-sm border-t mt-8 animate-fade-in">
-        &copy; {new Date().getFullYear()} Procurement Catalogue &mdash; All rights reserved.
-      </footer>
+        {/* Footer */}
+        <footer className="w-full py-4 bg-white/80 text-center text-gray-600 text-sm border-t backdrop-blur-md">
+          &copy; {new Date().getFullYear()} Procurement Catalogue &mdash; All rights reserved.
+        </footer>
+      </div>
     </div>
   );
 }
