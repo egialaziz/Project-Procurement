@@ -8,7 +8,7 @@ export default function Home() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/landing.jpg" // ganti dengan gambar kamu sendiri di /public
+          //src="/landing.jpg" // ganti dengan gambar kamu sendiri di /public
           alt="Background"
           className="w-full h-full object-cover opacity-30"
         />
