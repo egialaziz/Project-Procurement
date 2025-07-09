@@ -5,24 +5,34 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
-    // Tambahkan semua class di sini
-    "max-w-[80px]", "max-h-[80px]", "object-contain", "w-auto", "h-auto", "mx-auto", "rounded",
+    // Layout & Flex
     "flex", "flex-col", "lg:flex-row", "justify-center", "items-center", "items-start",
-    "p-10", "py-12", "px-6", "lg:w-1/2", "w-full", "h-full", "min-h-screen",
-    "text-orange-600", "text-gray-700", "text-white", "bg-black", "hover:bg-gray-800",
-    "bg-[#fff5e6]", "uppercase", "tracking-wide",
-    "rounded-full", "transition", "hover:bg-orange-600", "bg-gray-300", "hover:bg-gray-400", "text-black", "bg-blue-500", "hover:bg-blue-600",
-"bg-green-500", "hover:bg-green-600", "font-medium", "px-4", "py-2", "rounded", "shadow",
-"w-full", "max-w-sm", "ml-4", "text-center", "py-6", "text-orange-700",
-"text-3xl", "font-bold", "mb-6", "gap-4", "mb-4", "grid", "grid-cols-1", "md:grid-cols-4",
-"bg-white", "p-4", "mb-6", "space-y-4", "rounded", "hover:bg-orange-600",
-"text-sm", "font-medium", "rounded-full",
-"min-w-full", "border-collapse", "border", "border-orange-400", "px-4", "py-2", "bg-orange-200",
-"text-center", "hover:bg-orange-100",
-"bg-orange-100",
+    "grid", "grid-cols-1", "md:grid-cols-4",
+    "w-full", "h-full", "min-h-screen", "lg:w-1/2", "min-w-full", "max-w-sm", "max-w-[80px]", "max-h-[80px]",
+    "w-auto", "h-auto", "mx-auto",
+
+    // Padding & Margin
+    "p-4", "p-10", "px-4", "px-6", "py-2", "py-4", "py-6", "py-12", "mb-4", "mb-6", "ml-4", "gap-4", "space-y-4",
+
+    // Typography
+    "text-sm", "text-lg", "text-2xl", "text-3xl", "text-gray-700", "text-gray-600", "text-orange-600", "text-orange-700", "text-white", "text-black",
+    "font-bold", "font-medium", "font-semibold", "font-extrabold",
+    "uppercase", "tracking-wide", "text-center",
+
+    // Backgrounds & Borders
+    "bg-white", "bg-black", "bg-gray-300", "bg-gray-400", "bg-[#fff5e6]",
+    "bg-blue-500", "hover:bg-blue-600", "bg-green-500", "hover:bg-green-600",
+    "bg-orange-100", "bg-orange-200", "hover:bg-orange-100", "hover:bg-orange-600",
+    "border", "border-orange-400", "border-collapse", "rounded", "rounded-full", "shadow", "shadow-lg", "drop-shadow-sm", "drop-shadow-lg",
+
+    // Transitions & Hover
+    "hover:bg-gray-800", "transition", "hover:scale-105",
+
+    // Animations (tambahan animasi kustom kamu)
+    "animate-fade-in", "animate-slide-down", "animate-zoom-in", "animate-bounce-slow",
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
