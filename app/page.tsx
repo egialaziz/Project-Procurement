@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import HeroButton from '@/components/HeroButton';
 
 export default function HomePage() {
   return (
@@ -18,18 +19,18 @@ export default function HomePage() {
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
-          <a
+          <HeroButton
             href="/user/catalogue"
-            className="inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-orange-600 transition"
-          >
-            🛒 Lihat Katalog
-          </a>
-          <a
+            label="Lihat Katalog"
+            icon={<span>🛒</span>}
+            variant="solid"
+          />
+          <HeroButton
             href="/auth/login"
-            className="inline-flex items-center justify-center gap-2 border border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-black transition"
-          >
-            ➜ Masuk sebagai Admin
-          </a>
+            label="Masuk sebagai Admin"
+            icon={<span>➜</span>}
+            variant="outline"
+          />
         </div>
 
         <div className="mt-16">
