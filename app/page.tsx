@@ -1,51 +1,34 @@
 'use client';
 import Link from 'next/link';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <main className="relative min-h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/landing.jpg)' }}>
+      <div className="absolute inset-0 bg-black/60 z-0" />
 
-      {/* ✅ Navigation Bar */}
-     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
-  <div className="text-lg font-semibold text-orange-600">Procurement</div>
-  <div className="flex gap-4 ml-auto">
-    <Link href="/" className="text-gray-600 hover:text-orange-600 font-medium">
-      Home
-    </Link>
-    <Link href="/auth/login" className="text-gray-600 hover:text-orange-600 font-medium">
-      Admin Login
-    </Link>
-  </div>
-</nav>
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
+        <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
+          Selamat Datang di Sistem Procurement
+        </h1>
+        <p className="mt-4 text-lg md:text-2xl text-gray-200 max-w-2xl">
+          Kelola dan akses katalog pengadaan barang dengan mudah dan cepat.
+        </p>
 
-      {/* ✅ Main Content */}
-      <main className="flex-1 flex flex-col lg:flex-row">
-        {/* Kiri */}
-        <section className="flex flex-col justify-center items-start p-10 lg:w-1/2 bg-[#fff5e6]">
-          <p className="text-sm text-gray-500 mb-2 uppercase tracking-wide">Procurement Departement</p>
-          <h1 className="text-4xl font-bold text-orange-600 mb-4">e-Procurement Catalogue</h1>
-          <p className="text-gray-700 mb-8">
-            Semua contoh dari barang permintaan model sendiri telah kami rangkum dalam katalog di situs ini.
-          </p>
-          <Link href="/user/catalogue">
-            <button
-              type="button"
-              className="bg-black text-white py-3 px-6 rounded-full hover:bg-gray-800 transition"
-            >
-              Lihat Katalog
-            </button>
-          </Link>
-        </section>
-
-        {/* Kanan */}
-        <section className="lg:w-1/2 h-[300px] lg:h-auto">
-          <img
-           // src="/landing.jpg" // Ganti dengan nama file gambar kamu di public/
-            alt="ini harusnya foto tampan aku, tapi style .css belum mengizinkan"
-            className="w-full h-full object-cover"
-          />
-        </section>
-      </main>
-    </div>
+        <div className="mt-8 flex flex-col sm:flex-row gap-4">
+          <a
+            href="/user/catalogue"
+            className="bg-white text-black px-6 py-3 rounded-xl font-semibold shadow hover:bg-gray-200 transition"
+          >
+            Lihat Katalog
+          </a>
+          <a
+            href="/auth/login"
+            className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold shadow hover:bg-blue-700 transition"
+          >
+            Masuk sebagai Admin
+          </a>
+        </div>
+      </div>
+    </main>
   );
 }
