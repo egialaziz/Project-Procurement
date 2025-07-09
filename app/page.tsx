@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <main
       className="relative min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url(/OG.png)" }}
+      style={{ backgroundImage: "url(/landing-new.png)" }}
     >
       <div className="absolute inset-0 bg-black/50 z-0" />
 
@@ -39,4 +39,3 @@ export default function HomePage() {
     </main>
   );
 }
-
