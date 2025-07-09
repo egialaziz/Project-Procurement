@@ -8,7 +8,7 @@ export default function Home() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          //src="/landing.jpg" // ganti dengan gambar kamu sendiri di /public
+         // src="/landing.jpg"
           alt="Background"
           className="w-full h-full object-cover opacity-30"
         />
@@ -24,7 +24,7 @@ export default function Home() {
         </p>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center items-center mb-12">
           <Link href="/user/catalogue">
             <button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-full shadow transition-all duration-200">
               <FaShoppingCart /> Lihat Katalog
@@ -38,7 +38,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="mt-16">
+        <div className="mt-8">
           <div className="w-6 h-10 border-2 border-white rounded-full flex items-center justify-center mx-auto animate-bounce">
             <div className="w-1 h-1 bg-white rounded-full"></div>
           </div>
