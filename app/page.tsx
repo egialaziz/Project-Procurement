@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { FaArrowRight } from 'react-icons/fa';
 
 export default function Home() {
   return (
@@ -22,9 +23,12 @@ export default function Home() {
         {/* Kiri */}
         <section className="flex flex-col justify-center items-start p-10 lg:w-1/2 bg-[#fff5e6]">
           <p className="text-sm text-gray-500 mb-2 uppercase tracking-widest">Procurement Department</p>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-4 drop-shadow-lg animate-slide-down">e-Procurement Catalogue</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-4 drop-shadow-lg animate-slide-down">
+            e-Procurement Catalogue
+          </h1>
           <p className="text-gray-700 mb-8 max-w-md animate-fade-in">
-            Temukan berbagai contoh barang permintaan yang telah kami rangkum dalam katalog digital ini. Mudahkan proses pengadaan dengan referensi yang lengkap dan up-to-date!
+            Temukan berbagai contoh barang permintaan yang telah kami rangkum dalam katalog digital ini.
+            Mudahkan proses pengadaan dengan referensi yang lengkap dan up-to-date!
           </p>
           <Link href="/user/catalogue">
             <button
@@ -50,14 +54,6 @@ export default function Home() {
       <footer className="w-full py-4 bg-white text-center text-gray-400 text-sm border-t mt-8 animate-fade-in">
         &copy; {new Date().getFullYear()} Procurement Catalogue &mdash; All rights reserved.
       </footer>
-
-      {/* Animations (Tailwind custom classes, add to globals.css if needed) */}
-      {/*
-      .animate-fade-in { animation: fadeIn 1s ease; }
-      .animate-slide-down { animation: slideDown 0.7s ease; }
-      .animate-zoom-in { animation: zoomIn 0.7s ease; }
-      .animate-bounce-slow { animation: bounce 2s infinite; }
-      */}
     </div>
   );
 }
