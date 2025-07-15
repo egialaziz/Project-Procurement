@@ -8,7 +8,7 @@ export default function Home() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-         // src="/landing.jpg"
+         src="/landing.jpg"
           alt="Background"
           className="w-full h-full object-cover opacity-30"
         />
