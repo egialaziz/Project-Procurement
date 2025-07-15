@@ -12,7 +12,7 @@ export default function UploadPage() {
     photo: '',
     spesifikasi: '',
     minimum_pemesanan: '',
-    harga_minimum: '',
+    estimasi_harga_min_pemesanan: '',
     po_terbit: '',
     vendor: '',
     jenis: '',
@@ -41,7 +41,7 @@ export default function UploadPage() {
         photo: '',
         spesifikasi: '',
         minimum_pemesanan: '',
-        harga_minimum: '',
+        estimasi_harga_min_pemesanan: '',
         po_terbit: '',
         vendor: '',
         jenis: '',
@@ -88,7 +88,7 @@ export default function UploadPage() {
   <input
     type="text"
     placeholder="Harga Minimum"
-    value={newItem.harga_minimum}
+    value={newItem.estimasi_harga_min_pemesanan}
     onChange={(e) => setNewItem({ ...newItem, harga_minimum: e.target.value })}
     className="border border-orange-400 px-3 py-2 rounded"
   />
