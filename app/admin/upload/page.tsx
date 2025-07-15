@@ -22,7 +22,7 @@ export default function UploadPage() {
   const [message, setMessage] = useState('');
 
   const handleAddItem = async () => {
-    if (!newItem.no || !newItem.spesifikasi || !newItem.harga_minimum) {
+    if (!newItem.no || !newItem.spesifikasi || !newItem.estimasi_harga_min_pemesanan) {
       setMessage('⚠️ Kolom wajib tidak boleh kosong.');
       return;
     }
