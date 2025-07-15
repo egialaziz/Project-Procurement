@@ -89,7 +89,7 @@ export default function UploadPage() {
     type="text"
     placeholder="Harga Minimum"
     value={newItem.estimasi_harga_min_pemesanan}
-    onChange={(e) => setNewItem({ ...newItem, harga_minimum: e.target.value })}
+    onChange={(e) => setNewItem({ ...newItem, estimasi_harga_min_pemesanan: e.target.value })}
     className="border border-orange-400 px-3 py-2 rounded"
   />
   <input
