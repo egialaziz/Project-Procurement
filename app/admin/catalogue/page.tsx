@@ -125,15 +125,15 @@ export default function AdminCatalogue() {
         </div>
       </div>
 
-      {/* Supabase Configuration Notice */}
-      {!isSupabaseConfigured && (
-        <div className="mb-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
-          <p className="text-yellow-800">
-            <strong>Demo Mode:</strong> Supabase is not configured. Showing sample data. To use real functionality, add
-            your Supabase credentials to the environment variables.
-          </p>
-        </div>
-      )}
+   //   {/* Supabase Configuration Notice */}
+    //  {!isSupabaseConfigured && (
+     //   <div className="mb-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
+     //     <p className="text-yellow-800">
+      //      <strong>Demo Mode:</strong> Supabase is not configured. Showing sample data. To use real functionality, add
+      //      your Supabase credentials to the environment variables.
+       //   </p>
+     //   </div>
+    //  )}
 
       {/* 🔍 Search & Export */}
       <div className="flex justify-between items-center mb-6">
