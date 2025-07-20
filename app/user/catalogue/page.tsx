@@ -77,8 +77,8 @@ export default function UserCatalogue() {
 
       <h1 className="text-3xl font-bold mb-6 text-center text-orange-700">User Catalogue View</h1>
 
-    //  {/* Supabase Configuration Notice */}
-     // {!isSupabaseConfigured && (
+      {/* Supabase Configuration Notice */}
+      {!isSupabaseConfigured && (
       //  <div className="mb-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
         //  <p className="text-yellow-800">
         //    <strong>Demo Mode:</strong> Supabase is not configured. Showing sample data. To use real data, add your
