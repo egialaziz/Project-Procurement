@@ -169,7 +169,7 @@ export default function UserCatalogue() {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="bg-white border border-orange-400 px-4 py-2 rounded shadow hover:bg-orange-50 disabled:opacity-50"
+          className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Previous
         </button>
@@ -179,7 +179,7 @@ export default function UserCatalogue() {
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="bg-white border border-orange-400 px-4 py-2 rounded shadow hover:bg-orange-50 disabled:opacity-50"
+          className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next
         </button>
