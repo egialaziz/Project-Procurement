@@ -12,16 +12,8 @@ export default function AdminCatalogue() {
   const [selectAll, setSelectAll] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const [newItem, setNewItem] = useState<any>({
-    no: "",
-    photo: "",
-    spesifikasi: "",
-    minimum_pemesanan: "",
-    harga_minimum: "",
-    po_terbit: "",
-    vendor: "",
-    jenis: "",
-  })
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const router = useRouter()
 
@@ -29,7 +21,6 @@ export default function AdminCatalogue() {
     const fetchData = async () => {
       try {
         const { data } = await supabase.from("procurement_catalogue").select("*").order("no", { ascending: true })
-
         setData(data || [])
       } catch (error) {
         console.error("Error fetching data:", error)
@@ -41,7 +32,9 @@ export default function AdminCatalogue() {
     fetchData()
   }, [])
 
-  const filteredData = data.filter((row) => Object.values(row).join(" ").toLowerCase().includes(search.toLowerCase()))
+  const filteredData = data.filter((row) =>
+    Object.values(row).join(" ").toLowerCase().includes(search.toLowerCase())
+  )
 
   const handleSelectAll = () => {
     setSelectedRows(selectAll ? [] : filteredData.map((_, idx) => idx))
@@ -61,41 +54,14 @@ export default function AdminCatalogue() {
     XLSX.writeFile(workbook, "admin_selected_procurement.xlsx")
   }
 
-  const handleAddItem = async () => {
-    if (!newItem.no || !newItem.spesifikasi || !newItem.harga_minimum) {
-      alert("Field wajib tidak boleh kosong.")
-      return
-    }
+  const handleImageClick = (src: string) => {
+    setSelectedImage(src)
+    setIsModalOpen(true)
+  }
 
-    if (!isSupabaseConfigured) {
-      alert("Supabase is not configured. This is demo mode only.")
-      return
-    }
-
-    try {
-      const { error } = await supabase.from("procurement_catalogue").insert([newItem])
-      if (error) {
-        alert("Gagal menambahkan item.")
-        console.error(error)
-      } else {
-        alert("Item berhasil ditambahkan.")
-        setNewItem({
-          no: "",
-          photo: "",
-          spesifikasi: "",
-          minimum_pemesanan: "",
-          harga_minimum: "",
-          po_terbit: "",
-          vendor: "",
-          jenis: "",
-        })
-        const { data } = await supabase.from("procurement_catalogue").select("*")
-        setData(data || [])
-      }
-    } catch (error) {
-      console.error("Error adding item:", error)
-      alert("Error occurred while adding item.")
-    }
+  const closeModal = () => {
+    setSelectedImage(null)
+    setIsModalOpen(false)
   }
 
   return (
@@ -124,16 +90,6 @@ export default function AdminCatalogue() {
           </button>
         </div>
       </div>
-
-     {/* Supabase Configuration Notice */}
-     {/*!isSupabaseConfigured && (
-      <div className="mb-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
-         <p className="text-yellow-800">
-           <strong>Demo Mode:</strong> Supabase is not configured. Showing sample data. To use real functionality, add
-           your Supabase credentials to the environment variables.
-         </p>
-       </div>
-      )*/}
 
       {/* 🔍 Search & Export */}
       <div className="flex justify-between items-center mb-6">
@@ -190,10 +146,15 @@ export default function AdminCatalogue() {
                                 "?width=100&height=100" || "/placeholder.svg"
                             }
                             alt="Photo"
-                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
+                            onClick={() =>
+                              handleImageClick(
+                                (val as string).replace("/object/public/", "/render/image/public/")
+                              )
+                            }
+                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded cursor-pointer hover:scale-105 transition-transform duration-200"
                           />
                         ) : (
-                          (val as any)
+                          <span>{val as any}</span>
                         )}
                       </td>
                     ))}
@@ -203,6 +164,20 @@ export default function AdminCatalogue() {
           </table>
         )}
       </div>
+
+      {/* 🖼️ Modal Gambar */}
+      {isModalOpen && selectedImage && (
+        <div
+          onClick={closeModal}
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+        >
+          <img
+            src={selectedImage}
+            alt="Enlarged"
+            className="max-w-[90%] max-h-[90%] rounded shadow-xl"
+          />
+        </div>
+      )}
     </div>
   )
 }
