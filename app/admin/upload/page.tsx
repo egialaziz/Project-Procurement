@@ -36,10 +36,10 @@ export default function UploadPage() {
     if (file) {
      const fileExt = file.name.split('.').pop()
 const fileName = `${uuidv4()}.${fileExt}`
-const filePath = `Pic/${fileName}`
+const filePath = `Pic/${fileName}` // folder Pic di dalam bucket images
 
 const { error: uploadError } = await supabase.storage
-  .from('images') // ✅ bucket saja
+  .from('images') // ini hanya nama bucket
   .upload(filePath, file)
 
 if (uploadError) {
