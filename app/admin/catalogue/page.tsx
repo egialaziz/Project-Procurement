@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabaseClient"
 import * as XLSX from "xlsx"
+import Image from "next/image"
 
 export default function AdminCatalogue() {
   const [data, setData] = useState<any[]>([])
@@ -161,18 +162,20 @@ export default function AdminCatalogue() {
                     .map(([key, val], i) => (
                       <td key={i} className="border border-orange-400 px-4 py-2 text-center">
                         {key === "photo" && val ? (
-                          <img
+                          <Image
                             src={
-                              (val as string).replace("/object/public/", "/render/image/public/") +
-                                "?width=100&height=100" || "/placeholder.svg"
+                              (val as string).replace("/object/public/", "/render/image/public/")
                             }
                             alt="Photo"
+                            width={80}
+                            height={80}
                             onClick={() =>
                               handleImageClick(
                                 (val as string).replace("/object/public/", "/render/image/public/")
                               )
                             }
-                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded cursor-pointer hover:scale-105 transition-transform duration-200"
+                            className="object-contain mx-auto rounded cursor-pointer hover:scale-105 transition-transform duration-200"
+                            loading="lazy"
                           />
                         ) : (
                           <span>{val as any}</span>
