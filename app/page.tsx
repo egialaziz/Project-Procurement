@@ -7,14 +7,14 @@ export default function Home() {
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
       {/* ✅ Background Image */}
       <div className="absolute inset-0 -z-10">
-        <img
-          src="/landing.jpg"
-          alt="Background"
-          className="w-full h-full object-cover"
-        />
-        {/* ✅ Overlay */}
-        <div className="absolute inset-0 bg-black/50" />
-      </div>
+  <img
+    src="/landing.jpg"
+    alt="Background"
+    className="w-full h-full object-cover opacity-20 blur-sm scale-105"
+  />
+  <div className="absolute inset-0 bg-black/60" />
+</div>
+
 
       {/* ✅ Main Content */}
       <div className="text-center px-6 max-w-2xl">
