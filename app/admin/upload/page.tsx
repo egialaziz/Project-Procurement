@@ -48,7 +48,7 @@ export default function UploadPage() {
         return
       }
 
-      photoUrl = https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
+      photoUrl = 'https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
       newItem.photo = photoUrl
     }
 
