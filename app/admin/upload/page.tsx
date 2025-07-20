@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabaseClient'
 import { v4 as uuidv4 } from 'uuid'
@@ -23,8 +23,27 @@ export default function UploadPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
 
+  // Ambil no terakhir dari Supabase dan set nilai awal otomatis
+  useEffect(() => {
+    const fetchLastNo = async () => {
+      const { data, error } = await supabase
+        .from('procurement_catalogue')
+        .select('no')
+        .order('no', { ascending: false })
+        .limit(1)
+
+      if (!error && data && data.length > 0) {
+        setNewItem((prev: any) => ({ ...prev, no: data[0].no + 1 }))
+      } else {
+        setNewItem((prev: any) => ({ ...prev, no: 1 }))
+      }
+    }
+
+    fetchLastNo()
+  }, [])
+
   const handleAddItem = async () => {
-    if (!newItem.no || !newItem.spesifikasi || !newItem.estimasi_harga_min_pemesanan) {
+    if (!newItem.spesifikasi || !newItem.estimasi_harga_min_pemesanan) {
       setMessage('⚠️ Kolom wajib tidak boleh kosong.')
       return
     }
@@ -32,25 +51,24 @@ export default function UploadPage() {
     setLoading(true)
     setMessage('')
 
-    let photoUrl = ''
     if (file) {
-     const fileExt = file.name.split('.').pop()
-const fileName = `${uuidv4()}.${fileExt}`
-const filePath = `Pic/${fileName}` // folder Pic di dalam bucket images
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${uuidv4()}.${fileExt}`
+      const filePath = `Pic/${fileName}`
 
-const { error: uploadError } = await supabase.storage
-  .from('images') // ini hanya nama bucket
-  .upload(filePath, file)
+      const { error: uploadError } = await supabase.storage
+        .from('images')
+        .upload(filePath, file)
 
-if (uploadError) {
-  console.error('Upload error:', uploadError.message)
-  setMessage('❌ Gagal upload gambar.')
-  setLoading(false)
-  return
-}
+      if (uploadError) {
+        console.error('Upload error:', uploadError.message)
+        setMessage('❌ Gagal upload gambar.')
+        setLoading(false)
+        return
+      }
 
-const photoUrl = `https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
-newItem.photo = photoUrl
+      const photoUrl = `https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
+      newItem.photo = photoUrl
     }
 
     const { error } = await supabase.from('procurement_catalogue').insert([newItem])
@@ -59,8 +77,9 @@ newItem.photo = photoUrl
       setMessage('❌ Gagal menambahkan item.')
     } else {
       setMessage('✅ Item berhasil ditambahkan.')
-      setNewItem({
-        no: '',
+      setNewItem((prev: any) => ({
+        ...prev,
+        no: prev.no + 1, // increment otomatis
         spesifikasi: '',
         minimum_pemesanan: '',
         estimasi_harga_min_pemesanan: '',
@@ -68,7 +87,7 @@ newItem.photo = photoUrl
         vendor: '',
         jenis: '',
         photo: '',
-      })
+      }))
       setFile(null)
     }
 
@@ -92,8 +111,8 @@ newItem.photo = photoUrl
           type="number"
           placeholder="No"
           value={newItem.no}
-          onChange={(e) => setNewItem({ ...newItem, no: Number(e.target.value) })}
-          className="border border-orange-400 px-3 py-2 rounded"
+          disabled
+          className="border border-orange-400 px-3 py-2 rounded bg-gray-100 cursor-not-allowed"
         />
 
         <input
