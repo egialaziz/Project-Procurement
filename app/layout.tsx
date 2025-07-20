@@ -1,4 +1,3 @@
-// app/layout.tsx
 import './globals.css';
 
 export const metadata = {
@@ -6,6 +5,7 @@ export const metadata = {
   icons: {
     icon: "/procurement.png",
   },
+    generator: 'v0.dev'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
