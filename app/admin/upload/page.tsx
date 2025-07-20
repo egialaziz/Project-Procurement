@@ -34,23 +34,23 @@ export default function UploadPage() {
 
     let photoUrl = ''
     if (file) {
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${uuidv4()}.${fileExt}`
-      const filePath = `Pic/${fileName}`
+     const fileExt = file.name.split('.').pop()
+const fileName = `${uuidv4()}.${fileExt}`
+const filePath = `Pic/${fileName}`
 
-      const { error: uploadError } = await supabase.storage
-        .from('images') // ✅ hanya nama bucket
-        .upload(filePath, file)
+const { error: uploadError } = await supabase.storage
+  .from('images') // ✅ bucket saja
+  .upload(filePath, file)
 
-      if (uploadError) {
-        console.error('Upload error:', uploadError)
-        setMessage('❌ Gagal upload gambar.')
-        setLoading(false)
-        return
-      }
+if (uploadError) {
+  console.error('Upload error:', uploadError.message)
+  setMessage('❌ Gagal upload gambar.')
+  setLoading(false)
+  return
+}
 
-      photoUrl = `https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
-      newItem.photo = photoUrl
+const photoUrl = `https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
+newItem.photo = photoUrl
     }
 
     const { error } = await supabase.from('procurement_catalogue').insert([newItem])
