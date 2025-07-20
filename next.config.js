@@ -7,10 +7,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    domains: ['kcdhimdqvxsrkmugecmd.supabase.co'],
   },
-  // Remove the webpack configuration as it's causing conflicts
-  // Path aliases are handled by jsconfig.json
 }
 
 module.exports = nextConfig
