@@ -116,17 +116,17 @@ export default function UserCatalogue() {
         {loading ? (
           <p className="text-center py-6 text-orange-600 font-semibold">Loading data...</p>
         ) : (
-          <table className="min-w-full border-collapse border border-orange-400">
+          <table className="min-w-full border-collapse border border-orange-400 text-sm">
             <thead>
               <tr>
-                <th className="border border-orange-400 px-4 py-2 bg-orange-200">
+                <th className="border border-orange-400 px-4 py-2 bg-orange-200 text-sm">
                   <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                 </th>
                 {paginatedData[0] &&
                   Object.keys(paginatedData[0])
                     .filter((key) => key !== "id" && key !== "created_at")
                     .map((key) => (
-                      <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
+                      <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200 text-sm">
                         {key}
                       </th>
                     ))}
@@ -135,7 +135,7 @@ export default function UserCatalogue() {
             <tbody>
               {paginatedData.map((row, idx) => (
                 <tr key={idx} className="hover:bg-orange-100">
-                  <td className="border border-orange-400 px-4 py-2 text-center">
+                  <td className="border border-orange-400 px-4 py-2 text-center text-sm">
                     <input
                       type="checkbox"
                       checked={selectedRows.includes((currentPage - 1) * rowsPerPage + idx)}
@@ -145,7 +145,7 @@ export default function UserCatalogue() {
                   {Object.entries(row)
                     .filter(([key]) => key !== "id" && key !== "created_at")
                     .map(([key, val], i) => (
-                      <td key={i} className="border border-orange-400 px-4 py-2 text-center">
+                      <td key={i} className="border border-orange-400 px-4 py-2 text-center text-sm">
                         {key === "photo" && val ? (
                           <Image
                             src={val as string}
