@@ -10,7 +10,7 @@ export default function Home() {
   <img
     src="/landing.jpg"
     alt="Background"
-    className="w-full h-full object-cover opacity-20 blur-sm scale-90"
+    className="w-full h-full object-cover opacity-10 blur-sm scale-105"
   />
   <div className="absolute inset-0 bg-black/60" />
 </div>
