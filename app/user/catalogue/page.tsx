@@ -14,7 +14,9 @@ export default function UserCatalogue() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // Fetch data
+  const [currentPage, setCurrentPage] = useState(1)
+  const rowsPerPage = 10
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,31 +35,33 @@ export default function UserCatalogue() {
     fetchData()
   }, [])
 
-  const filteredData = data.filter((row) => {
-    const rowValues = Object.values(row).join(" ").toLowerCase()
-    return rowValues.includes(search.toLowerCase())
-  })
+  const filteredData = data.filter((row) =>
+    Object.values(row).join(" ").toLowerCase().includes(search.toLowerCase())
+  )
+
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage)
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  )
 
   const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedRows([])
-    } else {
-      const allIndexes = filteredData.map((_, idx) => idx)
-      setSelectedRows(allIndexes)
-    }
+    const pageIndexes = paginatedData.map((_, idx) => (currentPage - 1) * rowsPerPage + idx)
+    setSelectedRows(selectAll ? selectedRows.filter(i => !pageIndexes.includes(i)) : [...new Set([...selectedRows, ...pageIndexes])])
     setSelectAll(!selectAll)
   }
 
   const toggleRow = (idx: number) => {
-    if (selectedRows.includes(idx)) {
-      setSelectedRows(selectedRows.filter((i) => i !== idx))
-    } else {
-      setSelectedRows([...selectedRows, idx])
-    }
+    const globalIndex = (currentPage - 1) * rowsPerPage + idx
+    setSelectedRows(prev =>
+      prev.includes(globalIndex)
+        ? prev.filter(i => i !== globalIndex)
+        : [...prev, globalIndex]
+    )
   }
 
   const exportToExcel = () => {
-    const selectedData = selectedRows.map((i) => filteredData[i])
+    const selectedData = selectedRows.map(i => filteredData[i])
     if (selectedData.length === 0) return alert("No rows selected!")
     const worksheet = XLSX.utils.json_to_sheet(selectedData)
     const workbook = XLSX.utils.book_new()
@@ -77,7 +81,6 @@ export default function UserCatalogue() {
 
   return (
     <div className="p-8 bg-orange-100 min-h-screen">
-      {/* 🔗 Home */}
       <div className="mb-6">
         <a
           href="/"
@@ -89,14 +92,16 @@ export default function UserCatalogue() {
 
       <h1 className="text-3xl font-bold mb-6 text-center text-orange-700">User Catalogue View</h1>
 
-      {/* 🔍 Search & 📤 Export */}
       <div className="flex justify-between items-center mb-6">
         <input
           type="text"
           placeholder="Search..."
           className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value)
+            setCurrentPage(1)
+          }}
         />
         <button
           onClick={exportToExcel}
@@ -106,7 +111,6 @@ export default function UserCatalogue() {
         </button>
       </div>
 
-      {/* 📋 Table */}
       <div className="overflow-x-auto shadow rounded bg-white">
         {loading ? (
           <p className="text-center py-6 text-orange-600 font-semibold">Loading data...</p>
@@ -117,8 +121,8 @@ export default function UserCatalogue() {
                 <th className="border border-orange-400 px-4 py-2 bg-orange-200">
                   <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                 </th>
-                {filteredData[0] &&
-                  Object.keys(filteredData[0])
+                {paginatedData[0] &&
+                  Object.keys(paginatedData[0])
                     .filter((key) => key !== "id" && key !== "created_at")
                     .map((key) => (
                       <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
@@ -128,12 +132,12 @@ export default function UserCatalogue() {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((row, idx) => (
+              {paginatedData.map((row, idx) => (
                 <tr key={idx} className="hover:bg-orange-100">
                   <td className="border border-orange-400 px-4 py-2 text-center">
                     <input
                       type="checkbox"
-                      checked={selectedRows.includes(idx)}
+                      checked={selectedRows.includes((currentPage - 1) * rowsPerPage + idx)}
                       onChange={() => toggleRow(idx)}
                     />
                   </td>
@@ -143,7 +147,7 @@ export default function UserCatalogue() {
                       <td key={i} className="border border-orange-400 px-4 py-2 text-center">
                         {key === "photo" && val ? (
                           <img
-                            src={(val as string) || "/placeholder.svg"}
+                            src={(val as string)}
                             alt="Photo"
                             onClick={() => handleImageClick(val as string)}
                             className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded cursor-pointer hover:scale-105 transition-transform duration-200"
@@ -160,7 +164,28 @@ export default function UserCatalogue() {
         )}
       </div>
 
-      {/* 🔍 Modal */}
+      {/* Pagination */}
+      <div className="flex justify-center items-center gap-4 mt-6">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="bg-white border border-orange-400 px-4 py-2 rounded shadow hover:bg-orange-50 disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="text-orange-700 font-semibold">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          className="bg-white border border-orange-400 px-4 py-2 rounded shadow hover:bg-orange-50 disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
+
+      {/* Image Modal */}
       {isModalOpen && selectedImage && (
         <div
           onClick={closeModal}
