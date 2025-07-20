@@ -39,16 +39,17 @@ export default function UploadPage() {
       const filePath = `Pic/${fileName}`
 
       const { error: uploadError } = await supabase.storage
-        .from('images/Pic') // ✅ sesuai bucket kamu
+        .from('images') // ✅ hanya nama bucket
         .upload(filePath, file)
 
       if (uploadError) {
+        console.error('Upload error:', uploadError)
         setMessage('❌ Gagal upload gambar.')
         setLoading(false)
         return
       }
 
-      photoUrl = photoUrl = `https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
+      photoUrl = `https://kcdhimdqvxsrkmugecmd.supabase.co/storage/v1/object/public/images/${filePath}`
       newItem.photo = photoUrl
     }
 
@@ -87,33 +88,61 @@ export default function UploadPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 mb-4">
-        <input type="number" placeholder="No" value={newItem.no}
+        <input
+          type="number"
+          placeholder="No"
+          value={newItem.no}
           onChange={(e) => setNewItem({ ...newItem, no: Number(e.target.value) })}
-          className="border border-orange-400 px-3 py-2 rounded" />
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
 
-        <input type="text" placeholder="Spesifikasi" value={newItem.spesifikasi}
+        <input
+          type="text"
+          placeholder="Spesifikasi"
+          value={newItem.spesifikasi}
           onChange={(e) => setNewItem({ ...newItem, spesifikasi: e.target.value })}
-          className="border border-orange-400 px-3 py-2 rounded" />
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
 
-        <input type="text" placeholder="Minimum Pemesanan" value={newItem.minimum_pemesanan}
+        <input
+          type="text"
+          placeholder="Minimum Pemesanan"
+          value={newItem.minimum_pemesanan}
           onChange={(e) => setNewItem({ ...newItem, minimum_pemesanan: e.target.value })}
-          className="border border-orange-400 px-3 py-2 rounded" />
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
 
-        <input type="text" placeholder="Harga Minimum" value={newItem.estimasi_harga_min_pemesanan}
+        <input
+          type="text"
+          placeholder="Harga Minimum"
+          value={newItem.estimasi_harga_min_pemesanan}
           onChange={(e) => setNewItem({ ...newItem, estimasi_harga_min_pemesanan: e.target.value })}
-          className="border border-orange-400 px-3 py-2 rounded" />
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
 
-        <input type="text" placeholder="PO Terbit" value={newItem.po_terbit}
+        <input
+          type="text"
+          placeholder="PO Terbit"
+          value={newItem.po_terbit}
           onChange={(e) => setNewItem({ ...newItem, po_terbit: e.target.value })}
-          className="border border-orange-400 px-3 py-2 rounded" />
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
 
-        <input type="text" placeholder="Vendor" value={newItem.vendor}
+        <input
+          type="text"
+          placeholder="Vendor"
+          value={newItem.vendor}
           onChange={(e) => setNewItem({ ...newItem, vendor: e.target.value })}
-          className="border border-orange-400 px-3 py-2 rounded" />
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
 
-        <input type="text" placeholder="Jenis" value={newItem.jenis}
+        <input
+          type="text"
+          placeholder="Jenis"
+          value={newItem.jenis}
           onChange={(e) => setNewItem({ ...newItem, jenis: e.target.value })}
-          className="border border-orange-400 px-3 py-2 rounded" />
+          className="border border-orange-400 px-3 py-2 rounded"
+        />
 
         <input
           type="file"
