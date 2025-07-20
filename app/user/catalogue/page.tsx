@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient"
+import { supabase } from "@/lib/supabaseClient"
 import * as XLSX from "xlsx"
 
 export default function UserCatalogue() {
@@ -11,11 +11,17 @@ export default function UserCatalogue() {
   const [selectAll, setSelectAll] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  // Fetch data once on mount
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await supabase.from("procurement_catalogue").select("*").order("no", { ascending: true })
+        const { data } = await supabase
+          .from("procurement_catalogue")
+          .select("*")
+          .order("no", { ascending: true })
         setData(data || [])
       } catch (error) {
         console.error("Error fetching data:", error)
@@ -27,13 +33,11 @@ export default function UserCatalogue() {
     fetchData()
   }, [])
 
-  // Filtered by search
   const filteredData = data.filter((row) => {
     const rowValues = Object.values(row).join(" ").toLowerCase()
     return rowValues.includes(search.toLowerCase())
   })
 
-  // Toggle all checkboxes
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedRows([])
@@ -44,7 +48,6 @@ export default function UserCatalogue() {
     setSelectAll(!selectAll)
   }
 
-  // Toggle single checkbox
   const toggleRow = (idx: number) => {
     if (selectedRows.includes(idx)) {
       setSelectedRows(selectedRows.filter((i) => i !== idx))
@@ -53,7 +56,6 @@ export default function UserCatalogue() {
     }
   }
 
-  // Export selected rows
   const exportToExcel = () => {
     const selectedData = selectedRows.map((i) => filteredData[i])
     if (selectedData.length === 0) return alert("No rows selected!")
@@ -63,9 +65,19 @@ export default function UserCatalogue() {
     XLSX.writeFile(workbook, "selected_procurement.xlsx")
   }
 
+  const handleImageClick = (src: string) => {
+    setSelectedImage(src)
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setSelectedImage(null)
+    setIsModalOpen(false)
+  }
+
   return (
     <div className="p-8 bg-orange-100 min-h-screen">
-      {/* 🔗 Home Navigation */}
+      {/* 🔗 Home */}
       <div className="mb-6">
         <a
           href="/"
@@ -76,16 +88,6 @@ export default function UserCatalogue() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6 text-center text-orange-700">User Catalogue View</h1>
-
-      {/* Supabase Configuration Notice */}
-      {/*!isSupabaseConfigured && (
-      <div className="mb-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
-         <p className="text-yellow-800">
-          <strong>Demo Mode:</strong> Supabase is not configured. Showing sample data. To use real data, add your
-          Supabase credentials to the environment variables.
-        </p>
-       </div>
-      )*/}
 
       {/* 🔍 Search & 📤 Export */}
       <div className="flex justify-between items-center mb-6">
@@ -129,7 +131,11 @@ export default function UserCatalogue() {
               {filteredData.map((row, idx) => (
                 <tr key={idx} className="hover:bg-orange-100">
                   <td className="border border-orange-400 px-4 py-2 text-center">
-                    <input type="checkbox" checked={selectedRows.includes(idx)} onChange={() => toggleRow(idx)} />
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(idx)}
+                      onChange={() => toggleRow(idx)}
+                    />
                   </td>
                   {Object.entries(row)
                     .filter(([key]) => key !== "id" && key !== "created_at")
@@ -139,7 +145,8 @@ export default function UserCatalogue() {
                           <img
                             src={(val as string) || "/placeholder.svg"}
                             alt="Photo"
-                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
+                            onClick={() => handleImageClick(val as string)}
+                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded cursor-pointer hover:scale-105 transition-transform duration-200"
                           />
                         ) : (
                           <span>{val as any}</span>
@@ -152,6 +159,20 @@ export default function UserCatalogue() {
           </table>
         )}
       </div>
+
+      {/* 🔍 Modal */}
+      {isModalOpen && selectedImage && (
+        <div
+          onClick={closeModal}
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+        >
+          <img
+            src={selectedImage}
+            alt="Enlarged"
+            className="max-w-[90%] max-h-[90%] rounded shadow-xl"
+          />
+        </div>
+      )}
     </div>
   )
 }
