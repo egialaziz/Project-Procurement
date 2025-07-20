@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabaseClient"
 import * as XLSX from "xlsx"
+import Image from "next/image"
 
 export default function UserCatalogue() {
   const [data, setData] = useState<any[]>([])
@@ -146,11 +147,14 @@ export default function UserCatalogue() {
                     .map(([key, val], i) => (
                       <td key={i} className="border border-orange-400 px-4 py-2 text-center">
                         {key === "photo" && val ? (
-                          <img
-                            src={(val as string)}
+                          <Image
+                            src={val as string}
                             alt="Photo"
+                            width={80}
+                            height={80}
                             onClick={() => handleImageClick(val as string)}
-                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded cursor-pointer hover:scale-105 transition-transform duration-200"
+                            className="object-contain mx-auto rounded cursor-pointer hover:scale-105 transition-transform duration-200"
+                            loading="lazy"
                           />
                         ) : (
                           <span>{val as any}</span>
