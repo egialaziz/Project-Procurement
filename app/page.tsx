@@ -4,27 +4,29 @@ import { FaShoppingCart, FaSignInAlt } from 'react-icons/fa';
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-gray-800 flex items-center justify-center text-white overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
+      {/* ✅ Background Image */}
+      <div className="absolute inset-0 -z-10">
         <img
-         //src="/landing.jpg"
+          src="/landing.jpg"
           alt="Background"
-          className="w-full h-full object-cover opacity-30"
+          className="w-full h-full object-cover"
         />
+        {/* ✅ Overlay */}
+        <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 text-center px-6">
-        <h1 className="text-3xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
+      {/* ✅ Main Content */}
+      <div className="text-center px-6 max-w-2xl">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-xl">
           Selamat Datang di Sistem <br /> <span className="text-white">Procurement</span>
         </h1>
-        <p className="text-gray-200 text-lg mb-8 max-w-xl mx-auto">
+        <p className="text-gray-200 text-lg mb-10 drop-shadow-sm">
           Kelola dan akses katalog pengadaan barang dengan mudah, cepat, dan terpercaya.
         </p>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center items-center mb-12">
+        {/* ✅ Buttons */}
+        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center mb-12">
           <Link href="/user/catalogue">
             <button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-full shadow transition-all duration-200">
               <FaShoppingCart /> Lihat Katalog
@@ -37,7 +39,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Scroll Indicator */}
+        {/* ✅ Scroll Indicator */}
         <div className="mt-8">
           <div className="w-6 h-10 border-2 border-white rounded-full flex items-center justify-center mx-auto animate-bounce">
             <div className="w-1 h-1 bg-white rounded-full"></div>
