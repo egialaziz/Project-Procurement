@@ -3,7 +3,8 @@ module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+        "*.{js,ts,jsx,tsx,mdx}"
+    ],
   safelist: [
     // Layout & Flex
     "flex", "flex-col", "lg:flex-row", "justify-center", "items-center", "items-start",
