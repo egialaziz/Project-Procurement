@@ -39,7 +39,7 @@ export default function UploadPage() {
       const filePath = `Pic/${fileName}`
 
       const { error: uploadError } = await supabase.storage
-        .from('images') // ✅ sesuai bucket kamu
+        .from('images/Pic') // ✅ sesuai bucket kamu
         .upload(filePath, file)
 
       if (uploadError) {
