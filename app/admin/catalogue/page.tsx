@@ -1,93 +1,102 @@
-'use client';
+"use client"
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient';
-import * as XLSX from 'xlsx';
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient"
+import * as XLSX from "xlsx"
 
 export default function AdminCatalogue() {
-  const [data, setData] = useState<any[]>([]);
-  const [search, setSearch] = useState('');
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const [selectAll, setSelectAll] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<any[]>([])
+  const [search, setSearch] = useState("")
+  const [selectedRows, setSelectedRows] = useState<number[]>([])
+  const [selectAll, setSelectAll] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const [newItem, setNewItem] = useState<any>({
-    no: '',
-    photo: '',
-    spesifikasi: '',
-    minimum_pemesanan: '',
-    harga_minimum: '',
-    po_terbit: '',
-    vendor: '',
-    jenis: '',
-  });
+    no: "",
+    photo: "",
+    spesifikasi: "",
+    minimum_pemesanan: "",
+    harga_minimum: "",
+    po_terbit: "",
+    vendor: "",
+    jenis: "",
+  })
 
-  const router = useRouter();
+  const router = useRouter()
 
- useEffect(() => {
-  const fetchData = async () => {
-    const { data } = await supabase
-      .from('procurement_catalogue')
-      .select('*')
-      .order('no', { ascending: true });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await supabase.from("procurement_catalogue").select("*").order("no", { ascending: true })
 
-    setData(data || []);
-    setLoading(false); // tambahkan ini!
-  };
-  fetchData();
-}, []);
+        setData(data || [])
+      } catch (error) {
+        console.error("Error fetching data:", error)
+        setData([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
 
-  const filteredData = data.filter((row) =>
-    Object.values(row).join(' ').toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredData = data.filter((row) => Object.values(row).join(" ").toLowerCase().includes(search.toLowerCase()))
 
   const handleSelectAll = () => {
-    setSelectedRows(selectAll ? [] : filteredData.map((_, idx) => idx));
-    setSelectAll(!selectAll);
-  };
+    setSelectedRows(selectAll ? [] : filteredData.map((_, idx) => idx))
+    setSelectAll(!selectAll)
+  }
 
   const toggleRow = (idx: number) => {
-    setSelectedRows((prev) =>
-      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
-    );
-  };
+    setSelectedRows((prev) => (prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]))
+  }
 
   const exportToExcel = () => {
-    const selectedData = selectedRows.map((i) => filteredData[i]);
-    if (selectedData.length === 0) return alert('No rows selected!');
-    const worksheet = XLSX.utils.json_to_sheet(selectedData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Selected Data');
-    XLSX.writeFile(workbook, 'admin_selected_procurement.xlsx');
-  };
+    const selectedData = selectedRows.map((i) => filteredData[i])
+    if (selectedData.length === 0) return alert("No rows selected!")
+    const worksheet = XLSX.utils.json_to_sheet(selectedData)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Selected Data")
+    XLSX.writeFile(workbook, "admin_selected_procurement.xlsx")
+  }
 
   const handleAddItem = async () => {
     if (!newItem.no || !newItem.spesifikasi || !newItem.harga_minimum) {
-      alert('Field wajib tidak boleh kosong.');
-      return;
+      alert("Field wajib tidak boleh kosong.")
+      return
     }
 
-    const { error } = await supabase.from('procurement_catalogue').insert([newItem]);
-    if (error) {
-      alert('Gagal menambahkan item.');
-      console.error(error);
-    } else {
-      alert('Item berhasil ditambahkan.');
-      setNewItem({
-        no: '',
-        photo: '',
-        spesifikasi: '',
-        minimum_pemesanan: '',
-        harga_minimum: '',
-        po_terbit: '',
-        vendor: '',
-        jenis: '',
-      });
-      const { data } = await supabase.from('procurement_catalogue').select('*');
-      setData(data || []);
+    if (!isSupabaseConfigured) {
+      alert("Supabase is not configured. This is demo mode only.")
+      return
     }
-  };
+
+    try {
+      const { error } = await supabase.from("procurement_catalogue").insert([newItem])
+      if (error) {
+        alert("Gagal menambahkan item.")
+        console.error(error)
+      } else {
+        alert("Item berhasil ditambahkan.")
+        setNewItem({
+          no: "",
+          photo: "",
+          spesifikasi: "",
+          minimum_pemesanan: "",
+          harga_minimum: "",
+          po_terbit: "",
+          vendor: "",
+          jenis: "",
+        })
+        const { data } = await supabase.from("procurement_catalogue").select("*")
+        setData(data || [])
+      }
+    } catch (error) {
+      console.error("Error adding item:", error)
+      alert("Error occurred while adding item.")
+    }
+  }
 
   return (
     <div className="p-8 bg-orange-100 min-h-screen">
@@ -96,19 +105,19 @@ export default function AdminCatalogue() {
         <h1 className="text-3xl font-bold text-orange-700">Admin Catalogue Management</h1>
         <div className="flex flex-wrap gap-2">
           <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push("/")}
             className="bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 rounded shadow"
           >
             Home
           </button>
           <button
-            onClick={() => router.push('/admin/upload')}
+            onClick={() => router.push("/admin/upload")}
             className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded shadow"
           >
             + Tambah Manual
           </button>
           <button
-            onClick={() => router.push('/admin/upload-excel')}
+            onClick={() => router.push("/admin/upload-excel")}
             className="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded shadow"
           >
             Upload Excel
@@ -116,11 +125,29 @@ export default function AdminCatalogue() {
         </div>
       </div>
 
+      {/* Supabase Configuration Notice */}
+      {!isSupabaseConfigured && (
+        <div className="mb-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
+          <p className="text-yellow-800">
+            <strong>Demo Mode:</strong> Supabase is not configured. Showing sample data. To use real functionality, add
+            your Supabase credentials to the environment variables.
+          </p>
+        </div>
+      )}
 
       {/* 🔍 Search & Export */}
       <div className="flex justify-between items-center mb-6">
-        <input type="text" placeholder="Search..." className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm" value={search} onChange={(e) => setSearch(e.target.value)} />
-        <button onClick={exportToExcel} className="ml-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded shadow">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border border-orange-400 rounded px-4 py-2 w-full max-w-sm"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button
+          onClick={exportToExcel}
+          className="ml-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded shadow"
+        >
           Export Selected
         </button>
       </div>
@@ -138,7 +165,7 @@ export default function AdminCatalogue() {
                 </th>
                 {filteredData[0] &&
                   Object.keys(filteredData[0])
-                    .filter((key) => key !== 'id' && key !== 'created_at')
+                    .filter((key) => key !== "id" && key !== "created_at")
                     .map((key) => (
                       <th key={key} className="border border-orange-400 px-4 py-2 bg-orange-200">
                         {key}
@@ -153,19 +180,20 @@ export default function AdminCatalogue() {
                     <input type="checkbox" checked={selectedRows.includes(idx)} onChange={() => toggleRow(idx)} />
                   </td>
                   {Object.entries(row)
-                    .filter(([key]) => key !== 'id' && key !== 'created_at')
+                    .filter(([key]) => key !== "id" && key !== "created_at")
                     .map(([key, val], i) => (
                       <td key={i} className="border border-orange-400 px-4 py-2 text-center">
-                        {key === 'photo' && val ? (
-                          <a href={val as string} target="_blank" rel="noopener noreferrer">
-                            <img
-                              src={(val as string).replace('/object/public/', '/render/image/public/') + '?width=100&height=100'}
-                              alt="Photo"
-                              className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
-                            />
-                          </a>
+                        {key === "photo" && val ? (
+                          <img
+                            src={
+                              (val as string).replace("/object/public/", "/render/image/public/") +
+                                "?width=100&height=100" || "/placeholder.svg"
+                            }
+                            alt="Photo"
+                            className="max-w-[80px] max-h-[80px] object-contain mx-auto rounded"
+                          />
                         ) : (
-                          val as any
+                          (val as any)
                         )}
                       </td>
                     ))}
@@ -176,5 +204,5 @@ export default function AdminCatalogue() {
         )}
       </div>
     </div>
-  );
+  )
 }
