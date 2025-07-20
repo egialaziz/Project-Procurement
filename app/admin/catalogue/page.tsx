@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient"
+import { supabase } from "@/lib/supabaseClient"
 import * as XLSX from "xlsx"
 
 export default function AdminCatalogue() {
@@ -11,7 +11,6 @@ export default function AdminCatalogue() {
   const [selectedRows, setSelectedRows] = useState<number[]>([])
   const [selectAll, setSelectAll] = useState(false)
   const [loading, setLoading] = useState(true)
-
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -20,7 +19,10 @@ export default function AdminCatalogue() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await supabase.from("procurement_catalogue").select("*").order("no", { ascending: true })
+        const { data } = await supabase
+          .from("procurement_catalogue")
+          .select("*")
+          .order("no", { ascending: true })
         setData(data || [])
       } catch (error) {
         console.error("Error fetching data:", error)
@@ -42,7 +44,9 @@ export default function AdminCatalogue() {
   }
 
   const toggleRow = (idx: number) => {
-    setSelectedRows((prev) => (prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]))
+    setSelectedRows((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    )
   }
 
   const exportToExcel = () => {
@@ -62,6 +66,18 @@ export default function AdminCatalogue() {
   const closeModal = () => {
     setSelectedImage(null)
     setIsModalOpen(false)
+  }
+
+  const handleDelete = async (rowId: number) => {
+    if (!confirm("Apakah kamu yakin ingin menghapus item ini?")) return
+    try {
+      const { error } = await supabase.from("procurement_catalogue").delete().eq("id", rowId)
+      if (error) throw error
+      setData((prev) => prev.filter((item) => item.id !== rowId))
+    } catch (error) {
+      console.error("Gagal menghapus:", error)
+      alert("Terjadi kesalahan saat menghapus data.")
+    }
   }
 
   return (
@@ -108,7 +124,7 @@ export default function AdminCatalogue() {
         </button>
       </div>
 
-      {/* 📊 Tabel */}
+      {/* 📋 Table */}
       <div className="overflow-x-auto shadow rounded bg-white">
         {loading ? (
           <p className="text-center py-6 text-orange-600 font-semibold">Loading data...</p>
@@ -127,13 +143,18 @@ export default function AdminCatalogue() {
                         {key}
                       </th>
                     ))}
+                <th className="border border-orange-400 px-4 py-2 bg-orange-200">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((row, idx) => (
-                <tr key={idx} className="hover:bg-orange-100">
+                <tr key={idx} className="hover:bg-orange-100 group relative">
                   <td className="border border-orange-400 px-4 py-2 text-center">
-                    <input type="checkbox" checked={selectedRows.includes(idx)} onChange={() => toggleRow(idx)} />
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(idx)}
+                      onChange={() => toggleRow(idx)}
+                    />
                   </td>
                   {Object.entries(row)
                     .filter(([key]) => key !== "id" && key !== "created_at")
@@ -158,6 +179,14 @@ export default function AdminCatalogue() {
                         )}
                       </td>
                     ))}
+                  <td className="border border-orange-400 px-4 py-2 text-center">
+                    <button
+                      onClick={() => handleDelete(row.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded shadow"
+                    >
+                      Hapus
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
