@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import { supabase } from '@/lib/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 export default function UploadExcel() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -23,7 +25,7 @@ export default function UploadExcel() {
 
       const cleanedData = jsonData.map((row) => {
         const hargaStr: string = row['HARGA_MINIMUM']?.toString() || '';
-        const harga = parseInt(hargaStr.split(' ')[0].replace(/\D/g, ''), 10); // ambil angka awal saja
+        const harga = parseInt(hargaStr.split(' ')[0].replace(/\D/g, ''), 10);
 
         return {
           no: parseInt(row['NO']) || null,
@@ -36,28 +38,43 @@ export default function UploadExcel() {
         };
       });
 
-      // Insert ke Supabase
       const { error } = await supabase.from('procurement_catalogue').insert(cleanedData);
       if (error) {
         console.error(error);
         setMessage('Upload failed: ' + error.message);
       } else {
-        setMessage('Upload success!');
+        setMessage('✅ Upload success!');
       }
     } catch (err) {
       console.error(err);
-      setMessage('Something went wrong.');
+      setMessage('❌ Something went wrong.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl mb-4 font-bold">Upload Excel to Supabase</h1>
-      <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} disabled={loading} />
-      {loading && <p>Uploading...</p>}
-      {message && <p>{message}</p>}
+    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-orange-600">Upload Excel ke Supabase</h1>
+        <button
+          onClick={() => router.push('/admin/catalogue')}
+          className="bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 rounded shadow"
+        >
+          ← Kembali ke Catalogue
+        </button>
+      </div>
+
+      <input
+        type="file"
+        accept=".xlsx, .xls"
+        onChange={handleFileUpload}
+        disabled={loading}
+        className="mb-4"
+      />
+
+      {loading && <p className="text-orange-600">⏳ Uploading...</p>}
+      {message && <p className="text-orange-700 font-medium">{message}</p>}
     </div>
   );
 }
